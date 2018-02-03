@@ -1,0 +1,3 @@
+class TodoList < ApplicationRecord
+
+end
