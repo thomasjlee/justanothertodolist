@@ -15,5 +15,11 @@ $(document).on('turbolinks:load', function() {
     var id = $(this).closest('.todo-buttons').attr('id');
     $(`#${id}.todo-text`).toggle();
     $(`#${id}.edit-todo-form`).toggle();
+    var inputField = $(`#${id}.edit-todo-form`).find('.form-control')[0]
+
+    inputField.focus();
+    var currentVal = inputField.value;
+    inputField.value = '';
+    inputField.value = currentVal;
   });
 });

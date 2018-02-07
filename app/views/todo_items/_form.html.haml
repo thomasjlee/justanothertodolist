@@ -1,5 +1,5 @@
 =form_for [@todo_list, @todo_list.todo_items.build] do |f|
   .input-group
-    =f.text_field :name, id: :name, class: "form-control"
+    =f.text_field :name, id: :name, autofocus: true, class: "form-control"
     .input-group-append
       =f.submit "Add", class: "btn btn-outline-info"
