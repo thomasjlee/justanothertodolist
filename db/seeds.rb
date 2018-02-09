@@ -1,6 +1,6 @@
 TodoList.create!(
   name: "Groceries",
-  description: "Food stuff I need to buy this week",
+  description: "Food stuff I need to buy this week.",
   status: 0
 )
 
