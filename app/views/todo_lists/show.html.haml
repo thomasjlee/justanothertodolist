@@ -1,5 +1,5 @@
 .row.mt-5
-  .col-md-8.ml-auto.mr-auto
+  .col-sm-8.ml-auto.mr-auto
     .card.mb-3
       .card-header.text-center
         %h1= @todo_list.name
@@ -9,15 +9,15 @@
           = render 'todo_items/todo_item', todo_item: item
 
 .row.text-center
-  .col-md-8.ml-auto.mr-auto
+  .col-sm-8.ml-auto.mr-auto
     .card
       .card-header
         = render "todo_items/form"
 
 .row.text-center.mt-3
-  .col-md-8.ml-auto.mr-auto
+  .col-sm-8.ml-auto.mr-auto
     .btn-group
-      - if @todo_list_items.any? { |item| item.completed? }
+      - if @todo_list_items.any? {|item| item.completed?}
         = link_to "Clear Completed", todo_list_clear_completed_path(@todo_list), class: "btn btn-outline-info", method: :destroy
       = link_to "Edit List", edit_todo_list_path(@todo_list), class: "btn btn-outline-info"
       = link_to "All Lists", todo_lists_path, class: "btn btn-outline-info"

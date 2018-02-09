@@ -1,0 +1,29 @@
+.completed {
+  text-decoration: line-through;
+}
+
+.todo-text {
+  width: 80%;
+}
+
+.edit-todo-form {
+  display: none;
+}
+
+.todo-buttons {
+  width: 20%;
+}
+
+.check-btn {
+  margin: 0 2px;
+}
+
+.delete-btn {
+  display: none;
+  margin: 0 2px;
+}
+
+.edit-btn {
+  display: none;
+  margin: 0 2px;
+}

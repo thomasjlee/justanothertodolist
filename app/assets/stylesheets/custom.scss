@@ -14,31 +14,3 @@ a {
     color: var(--secondary);
   }
 }
-
-.todo-item-group {
-  width: 100%;
-  height: 100%;
-}
-
-.todo-text {
-  width: 70%;
-  word-break: break-all;
-  float: left;
-}
-
-.todo-buttons {
-  float: right;
-}
-
-.edit-todo-form {
-  display: none;
-  float: left;
-}
-
-.delete-btn {
-  display: none;
-}
-
-.edit-btn {
-  display: none;
-}

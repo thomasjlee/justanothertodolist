@@ -1,26 +1,23 @@
-%li.list-group-item.todo-item{ id: todo_item.id }
-  .todo-item-group
-    .todo-text{ id: todo_item.id }
-      - if todo_item.completed?
-        %span{ :style => "text-decoration: line-through;" }= todo_item.name
-      - else
-        = todo_item.name
+%li.todo-wrapper.list-group-item.d-flex.justify-content-between
+  .todo-text{class: ("completed" if todo_item.completed?)}
+    = todo_item.name
 
-    .todo-buttons{ id: todo_item.id }
-      %button.edit-btn.btn.btn-outline-warning= octicon("pencil",
-        height: 22, "aria-label": "edit todo")
-
-      = link_to octicon("x", :height => 22, :"aria-label" => "delete todo"),
-        todo_list_todo_item_path(@todo_list, todo_item.id),
-        method: :delete, class: "delete-btn btn btn-outline-danger"
-
-      = link_to octicon("check", :height => 22, :"aria-label" => "mark as complete"),
-        complete_todo_list_todo_item_path(@todo_list, todo_item.id), method: :patch,
-        class: "btn check-btn #{todo_item.completed ? 'btn-info' : 'btn-outline-info'}"
-
-  .edit-todo-form{ id: todo_item.id }
-    = form_with model: todo_item, url: todo_list_todo_item_path(@todo_list.id, todo_item), method: :patch, class: "form-inline" do |f|
+  .edit-todo-form
+    = form_with model: todo_item, url: todo_list_todo_item_path(@todo_list.id, todo_item),
+      method: :patch, class: "form-inline" do |f|
       .input-group
-        = f.text_field :name, class: "form-control"
+        = f.text_area :name, cols: 40, rows: 1, class: "form-control"
         .input-group-append
           = f.submit "Save", class: "btn btn-outline-info"
+
+  .todo-buttons.d-flex.justify-content-end.align-items-center
+    %button.edit-btn.btn.btn-outline-warning
+      = octicon("pencil", height: 22)
+
+    = link_to octicon("x", :height => 22),
+      todo_list_todo_item_path(@todo_list, todo_item.id),
+      method: :delete, class: "delete-btn btn btn-outline-danger"
+
+    = link_to octicon("check", :height => 22),
+      complete_todo_list_todo_item_path(@todo_list, todo_item.id),
+      method: :patch, class: "check-btn btn #{todo_item.completed ? 'btn-info' : 'btn-outline-info'}"

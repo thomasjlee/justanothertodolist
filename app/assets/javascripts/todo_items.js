@@ -1,25 +1,22 @@
 $(document).on('turbolinks:load', function() {
-  $('.todo-buttons').on('mouseenter', function(event) {
-    var id = $(this).attr('id');
-    $(`.todo-buttons#${id} .edit-btn`).fadeToggle(100);
-    $(`.todo-buttons#${id} .delete-btn`).fadeToggle(100).css('display', 'inline-block');
+  $('.todo-buttons').hover(function() {
+    $(this).find(`.edit-btn`).fadeToggle(200);
+    $(this).find(`.delete-btn`).fadeToggle(200);
   });
 
-  $('.todo-buttons').on('mouseleave', function() {
-    var id = $(this).attr('id');
-    $(`.todo-buttons#${id} .edit-btn`).fadeToggle(100);
-    $(`.todo-buttons#${id} .delete-btn`).fadeToggle(100);
-  });
+  $('.todo-wrapper').on('click', '.edit-btn', function() {
+    var todoItem = $(this).closest('.todo-wrapper');
 
-  $('.edit-btn').on('click', function(event) {
-    var id = $(this).closest('.todo-buttons').attr('id');
-    $(`#${id}.todo-text`).toggle();
-    $(`#${id}.edit-todo-form`).toggle();
-    var inputField = $(`#${id}.edit-todo-form`).find('.form-control')[0]
+    todoItem.find('.todo-text').toggle();
+    todoItem.find('.edit-todo-form').toggle();
 
-    inputField.focus();
-    var currentVal = inputField.value;
-    inputField.value = '';
-    inputField.value = currentVal;
+    focusEditForm(todoItem);
   });
 });
+
+function focusEditForm(todoItem) {
+  var textArea = todoItem.find("textarea[name='todo_item[name]']");
+
+  var currentVal = textArea.val();
+  textArea.focus().val('').val(currentVal);
+}

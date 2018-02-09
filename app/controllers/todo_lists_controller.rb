@@ -23,9 +23,6 @@ class TodoListsController < ApplicationController
     end
   end
 
-  def edit
-  end
-
   def update
     if @todo_list.update_attributes(todo_list_params)
       redirect_to @todo_list

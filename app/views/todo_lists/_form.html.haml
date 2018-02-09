@@ -2,7 +2,7 @@
   .col-md-8.ml-auto.mr-auto
     .card.mb-3
       .card-header
-        %h2 New Todo List
+        %h2= @todo_list.persisted? ? "Edit List" : "Add List"
       .card-body
         = form_with model: @todo_list do |f|
           .form-group
@@ -16,8 +16,8 @@
               = f.submit "Save", class: "btn btn-outline-info mt-3"
             - else
               = f.submit "Update", class: "btn btn-outline-info mt-3"
-
           .form-group
             = link_to "Cancel", :back, class: "btn btn-outline-info"
             - if f.object.persisted?
-              = link_to "Delete", todo_list_path, method: "delete", class: "btn btn-outline-info", data: { confirm: "Are you sure?" }
+              = link_to "Delete", todo_list_path,
+                method: "delete", class: "btn btn-outline-info", data: {confirm: "Are you sure?"}
