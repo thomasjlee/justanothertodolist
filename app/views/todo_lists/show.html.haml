@@ -6,7 +6,7 @@
         %p= @todo_list.description
       %ul.list-group.list-group-flush
         - @todo_list_items.each do |item|
-          = render 'todo_items/todo_item', todo_item: item
+          = render "todo_items/todo_item", todo_item: item
 
 .row.text-center
   .col-sm-8.ml-auto.mr-auto

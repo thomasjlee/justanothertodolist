@@ -3,8 +3,8 @@
     = todo_item.name
 
   .edit-todo-form
-    = form_with model: todo_item, url: todo_list_todo_item_path(@todo_list.id, todo_item),
-      method: :patch, class: "form-inline" do |f|
+    = form_with model: todo_item, url: todo_list_todo_item_path(@todo_list, todo_item),
+      local: true, class: "form-inline" do |f|
       .input-group
         = f.text_area :name, cols: 40, rows: 1, class: "form-control"
         .input-group-append

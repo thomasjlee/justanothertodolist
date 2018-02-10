@@ -19,15 +19,18 @@ class TodoListsController < ApplicationController
     if @todo_list.save
       redirect_to @todo_list
     else
-      render "new"
+      render :new
     end
+  end
+
+  def edit
   end
 
   def update
     if @todo_list.update_attributes(todo_list_params)
       redirect_to @todo_list
     else
-      render 'edit'
+      render :edit
     end
   end
 

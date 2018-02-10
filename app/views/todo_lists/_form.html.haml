@@ -4,7 +4,7 @@
       .card-header
         %h2= @todo_list.persisted? ? "Edit List" : "Add List"
       .card-body
-        = form_with model: @todo_list do |f|
+        = form_with model: @todo_list, local: true do |f|
           .form-group
             = f.label :name
             = f.text_field :name, id: :name, class: "form-control"
