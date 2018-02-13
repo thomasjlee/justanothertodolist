@@ -1,4 +1,4 @@
-= form_for [@todo_list, @todo_list.todo_items.build] do |f|
+= form_with scope: :todo_item, url: todo_list_todo_items_path(@todo_list) do |f|
   .input-group
     = f.text_field :name, id: :name, autofocus: true, class: "form-control"
     .input-group-append
