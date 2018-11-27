@@ -1,0 +1,8 @@
+var todoItem = document.getElementById("<%= @todo_item.id %>");
+var todoText = todoItem.querySelector('.todo-text');
+var completeLink = todoItem.querySelector('[href="<%= complete_todo_list_todo_item_path %>"]');
+
+todoText.classList.toggle('completed');
+
+completeLink.classList.toggle('btn-info');
+completeLink.classList.toggle('btn-outline-info');

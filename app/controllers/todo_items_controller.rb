@@ -17,12 +17,18 @@ class TodoItemsController < ApplicationController
 
   def destroy
     @todo_item.destroy
-    redirect_to @todo_list
+    respond_to do |format|
+      format.html { redirect_to @todo_list }
+      format.js
+    end
   end
 
   def complete
-    @todo_item.update_attribute :completed, !@todo_item.completed
-    redirect_to @todo_list
+    @todo_item.toggle!(:completed)
+    respond_to do |format|
+      format.html { redirect_to @todo_list }
+      format.js
+    end
   end
 
   def clear_completed

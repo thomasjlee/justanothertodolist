@@ -1,4 +1,4 @@
-%li.todo-wrapper.list-group-item.d-flex.justify-content-between
+%li.todo-wrapper.list-group-item.d-flex.justify-content-between{id: [todo_item.id]}
   .todo-text{class: ("completed" if todo_item.completed?)}
     = todo_item.name
 
@@ -16,8 +16,8 @@
 
     = link_to octicon("x", :height => 22),
       todo_list_todo_item_path(@todo_list, todo_item.id),
-      method: :delete, class: "delete-btn btn btn-outline-danger"
+      method: :delete, remote: true, class: "delete-btn btn btn-outline-danger"
 
     = link_to octicon("check", :height => 22),
       complete_todo_list_todo_item_path(@todo_list, todo_item.id),
-      method: :patch, class: "check-btn btn #{todo_item.completed ? 'btn-info' : 'btn-outline-info'}"
+      method: :patch, remote: true, class: "check-btn btn #{todo_item.completed ? 'btn-info' : 'btn-outline-info'}"

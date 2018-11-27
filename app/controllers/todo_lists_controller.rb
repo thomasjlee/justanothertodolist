@@ -16,10 +16,12 @@ class TodoListsController < ApplicationController
   def create
     @todo_list = TodoList.new(todo_list_params)
 
-    if @todo_list.save
-      redirect_to @todo_list
-    else
-      render :new
+    respond_to do |format|
+      if @todo_list.save
+        format.html { redirect_to @todo_list }
+      else
+        format.html { render :new }
+      end
     end
   end
 
