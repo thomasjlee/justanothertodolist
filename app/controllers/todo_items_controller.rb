@@ -11,7 +11,7 @@ class TodoItemsController < ApplicationController
     if @todo_item.update_attributes(todo_item_params)
       redirect_to @todo_list
     else
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -39,15 +39,15 @@ class TodoItemsController < ApplicationController
 
   private
 
-  def set_todo_list
-    @todo_list = TodoList.find(params[:todo_list_id])
-  end
+    def set_todo_list
+      @todo_list = TodoList.find(params[:todo_list_id])
+    end
 
-  def set_todo_item
-    @todo_item = @todo_list.todo_items.find(params[:id])
-  end
+    def set_todo_item
+      @todo_item = @todo_list.todo_items.find(params[:id])
+    end
 
-  def todo_item_params
-    params.require(:todo_item).permit(:name, :completed)
-  end
+    def todo_item_params
+      params.require(:todo_item).permit(:name, :completed)
+    end
 end

@@ -17,7 +17,7 @@
 .row.text-center.mt-3
   .col-sm-8.ml-auto.mr-auto
     .btn-group
-      - if @todo_list_items.any? {|item| item.completed?}
-        = link_to "Clear Completed", todo_list_clear_completed_path(@todo_list), class: "btn btn-outline-info", method: :destroy
+      - if @todo_list_items.any? { |item| item.completed? }
+        = link_to "Clear Completed", clear_todo_list_todo_items_path(@todo_list), class: "btn btn-outline-info", method: :destroy
       = link_to "Edit List", edit_todo_list_path(@todo_list), class: "btn btn-outline-info"
       = link_to "All Lists", todo_lists_path, class: "btn btn-outline-info"
