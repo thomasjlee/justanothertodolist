@@ -1,25 +1,16 @@
 var todoItem = document.getElementById("<%= @todo_item.id %>");
 var todoItems = document.getElementById('todo-items');
-var clearCompletedBtn = document.querySelector('[href="<%= clear_todo_list_todo_items_path(@todo_list) %>"]');
 var todoText = todoItem.querySelector('.todo-text');
 var completeLink = todoItem.querySelector('[href="<%= complete_todo_list_todo_item_path %>"]');
 
+var clearForm = document.querySelector('[action="<%= clear_todo_list_todo_items_path(@todo_list) %>"]');
+var clearBtn = clearForm.querySelector('input[type="submit"]');
+
 todoItems.addEventListener('ajax:success', function() {
-  <%= any_completed?(@todo_list.todo_items) %> ? enableBtn() : disableBtn();
+  <%= any_completed?(@todo_list.todo_items) %> ? clearBtn.removeAttribute('disabled') : clearBtn.setAttribute('disabled', true);
 });
 
 todoText.classList.toggle('completed');
 
 completeLink.classList.toggle('btn-info');
 completeLink.classList.toggle('btn-outline-info');
-
-function enableBtn() {
-  clearCompletedBtn.classList.remove('btn-outline-secondary', 'disabled');
-  clearCompletedBtn.classList.add('btn-outline-info');
-}
-
-function disableBtn() {
-  clearCompletedBtn.classList.add('btn-outline-secondary', 'disabled');
-  clearCompletedBtn.classList.remove('btn-outline-info');
-}
-

@@ -16,10 +16,11 @@
 
 .row.text-center.mt-3
   .col-sm-8.ml-auto.mr-auto
-    .btn-group
-      = link_to "Clear Completed",
+    .d-inline-flex
+      = button_to "Clear Completed",
         clear_todo_list_todo_items_path(@todo_list),
-        method: :destroy,
-        class: "btn #{any_completed?(@todo_list_items) ? 'btn-outline-info' : 'btn-outline-secondary disabled'}"
-      = link_to "Edit List", edit_todo_list_path(@todo_list), class: "btn btn-outline-info"
+        disabled: !any_completed?(@todo_list_items),
+        method: :delete,
+        class: "text-info form-control border-info"
+      = link_to "Edit List", edit_todo_list_path(@todo_list), class: "mx-2 btn btn-outline-info"
       = link_to "All Lists", todo_lists_path, class: "btn btn-outline-info"
