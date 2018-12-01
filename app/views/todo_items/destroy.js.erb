@@ -1,3 +1,11 @@
 var todoItem = document.getElementById("<%= @todo_item.id %>");
 todoItem.parentNode.removeChild(todoItem);
 
+if (<%= any_completed?(@todo_list.todo_items) %>) {
+  todoItems.setAttribute('data-clearable', true);
+  jata.toggleClearCompletedButton();
+} else {
+  todoItems.removeAttribute('data-clearable');
+  jata.toggleClearCompletedButton();
+}
+

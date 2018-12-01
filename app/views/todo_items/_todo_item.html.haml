@@ -22,7 +22,12 @@
     %button.edit-btn.btn.btn-outline-warning
       = octicon("pencil", height: 22)
 
-    = link_to octicon("x", :height => 22),
-      todo_list_todo_item_path(@todo_list, todo_item.id),
-      method: :delete, remote: true, class: "delete-btn btn btn-outline-danger"
+    = form_for todo_item,
+      url: todo_list_todo_item_path(@todo_list, todo_item.id),
+      method: :delete,
+      authenticity_token: true,
+      remote: true,
+      data: { confirm: "Are you sure?" } do |f|
+      = f.button octicon("trashcan", :height => 22),
+        class: "btn btn-sm btn-outline-danger"
 

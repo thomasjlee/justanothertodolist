@@ -4,7 +4,7 @@
       .card-header.text-center
         %h1= @todo_list.name
         %p= @todo_list.description
-      %ul.list-group.list-group-flush#todo-items
+      %ul.list-group.list-group-flush#todo-items{data:{clearable: true}}
         - @todo_list_items.each do |item|
           = render "todo_items/todo_item", todo_item: item
 
