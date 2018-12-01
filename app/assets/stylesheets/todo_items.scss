@@ -1,28 +1,14 @@
-.completed {
-  text-decoration: line-through;
+.list-group-item {
+  padding: 0.5rem 0.5rem;
 }
 
-.todo-text {
-  width: 80%;
+.completed {
+  text-decoration: line-through;
 }
 
 .edit-todo-form {
   display: none;
 }
-
-.todo-buttons {
-  width: 20%;
-}
-
-// .delete-btn {
-//   display: none;
-//   margin: 0 2px;
-// }
-
-// .edit-btn {
-//   display: none;
-//   margin: 0 2px;
-// }
 
 .clickable:hover {
   cursor: pointer;

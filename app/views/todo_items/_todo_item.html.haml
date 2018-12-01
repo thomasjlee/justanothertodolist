@@ -1,14 +1,15 @@
 %li.todo-wrapper.list-group-item.d-flex.justify-content-between{id: [todo_item.id]}
-  = form_for todo_item,
-    url: complete_todo_list_todo_item_path(@todo_list, todo_item.id),
-    authenticity_token: true,
-    remote: true do |f|
-    = f.button octicon("check", height: 16),
-      name: "todo_item[completed]",
-      class: "btn btn-sm #{todo_item.completed? ? 'btn-info' : 'btn-outline-info'}"
+  .d-flex
+    = form_for todo_item,
+      url: complete_todo_list_todo_item_path(@todo_list, todo_item.id),
+      authenticity_token: true,
+      remote: true do |f|
+      = f.button octicon("check", height: 16),
+        name: "todo_item[completed]",
+        class: "btn btn-sm #{todo_item.completed? ? 'btn-info' : 'btn-outline-info'}"
 
-  .todo-text{class: ("completed" if todo_item.completed?)}
-    = todo_item.name
+    .todo-text.px-2{class: ("completed" if todo_item.completed?)}
+      = todo_item.name
 
   .edit-todo-form
     = form_with model: todo_item, url: todo_list_todo_item_path(@todo_list, todo_item),
@@ -18,9 +19,9 @@
         .input-group-append
           = f.submit "Save", class: "btn btn-outline-info"
 
-  .todo-buttons.d-flex.justify-content-end.align-items-center
-    %button.edit-btn.btn.btn-outline-warning
-      = octicon("pencil", height: 22)
+  .d-flex.justify-content-end.align-items-start
+    %button.edit-btn.btn.btn-sm.btn-outline-warning.mr-1
+      = octicon("pencil", height: 16)
 
     = form_for todo_item,
       url: todo_list_todo_item_path(@todo_list, todo_item.id),
@@ -28,6 +29,6 @@
       authenticity_token: true,
       remote: true,
       data: { confirm: "Are you sure?" } do |f|
-      = f.button octicon("trashcan", :height => 22),
+      = f.button octicon("trashcan", :height => 16),
         class: "btn btn-sm btn-outline-danger"
 
