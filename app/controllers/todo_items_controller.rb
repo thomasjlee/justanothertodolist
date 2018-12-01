@@ -3,8 +3,15 @@ class TodoItemsController < ApplicationController
   before_action :set_todo_item, except: [:create, :clear_completed]
 
   def create
-    @todo_item = @todo_list.todo_items.create(todo_item_params)
-    redirect_to @todo_list
+    @todo_item = @todo_list.todo_items.build(todo_item_params)
+    respond_to do |format|
+      if @todo_item.save
+        format.js
+        format.html { redirect_to @todo_list }
+      else
+        format.html { redirect_to @todo_list }
+      end
+    end
   end
 
   def update
