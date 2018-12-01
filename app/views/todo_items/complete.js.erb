@@ -7,7 +7,13 @@ var clearForm = document.querySelector('[action="<%= clear_todo_list_todo_items_
 var clearBtn = clearForm.querySelector('input[type="submit"]');
 
 todoItems.addEventListener('ajax:success', function() {
-  <%= any_completed?(@todo_list.todo_items) %> ? clearBtn.removeAttribute('disabled') : clearBtn.setAttribute('disabled', true);
+  if (<%= any_completed?(@todo_list.todo_items) %>) {
+    clearBtn.removeAttribute('disabled');
+    clearBtn.classList.add('clickable');
+  } else {
+    clearBtn.setAttribute('disabled', true);
+    clearBtn.classList.remove('clickable');
+  }
 });
 
 todoText.classList.toggle('completed');
