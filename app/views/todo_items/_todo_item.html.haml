@@ -1,6 +1,7 @@
 %li.todo-wrapper.list-group-item.d-flex.justify-content-between{id: [todo_item.id]}
   = form_for todo_item,
     url: complete_todo_list_todo_item_path(@todo_list, todo_item.id),
+    authenticity_token: true,
     remote: true do |f|
     = f.button octicon("check", height: 16),
       name: "todo_item[completed]",
