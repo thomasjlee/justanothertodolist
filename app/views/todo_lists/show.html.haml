@@ -21,6 +21,6 @@
         clear_todo_list_todo_items_path(@todo_list),
         disabled: !any_completed?(@todo_list_items),
         method: :delete,
-        class: "text-info form-control border-info #{ 'clickable' if any_completed?(@todo_list_items) }"
+        class: "form-control #{ any_completed?(@todo_list_items) ? 'clickable text-info border-info' : 'text-secondary border-secondary' }"
       = link_to "Edit List", edit_todo_list_path(@todo_list), class: "mx-2 btn btn-outline-info"
       = link_to "All Lists", todo_lists_path, class: "btn btn-outline-info"
