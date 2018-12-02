@@ -1,4 +1,4 @@
-%li.todo-wrapper.list-group-item.d-flex.justify-content-between{id: [todo_item.id]}
+%li.todo-item.list-group-item.d-flex.justify-content-between{id: [todo_item.id]}
   .d-flex
     = form_for todo_item,
       url: complete_todo_list_todo_item_path(@todo_list, todo_item.id),
@@ -12,12 +12,13 @@
       = todo_item.name
 
   .edit-todo-form
-    = form_with model: todo_item, url: todo_list_todo_item_path(@todo_list, todo_item),
-      local: true, class: "form-inline" do |f|
+    = form_with model: todo_item,
+      url: todo_list_todo_item_path(@todo_list, todo_item),
+      class: "form-inline" do |f|
       .input-group
-        = f.text_area :name, cols: 40, rows: 1, class: "form-control"
+        = f.text_area :name, cols: 40, rows: 1, class: "form-control form-control-sm"
         .input-group-append
-          = f.submit "Save", class: "btn btn-outline-info"
+          = f.submit "Save", class: "btn btn-sm btn-outline-info"
 
   .d-flex.justify-content-end.align-items-start
     %button.edit-btn.btn.btn-sm.btn-outline-warning.mr-1
