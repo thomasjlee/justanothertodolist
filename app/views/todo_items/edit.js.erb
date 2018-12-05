@@ -1,0 +1,57 @@
+document.getElementById('todo-items').addEventListener('ajax:success', function() {
+  if (isEditState() && isCancelingEdit()) {
+    cancelEdit();
+  } else if (isEditState()) {
+    setViewState();
+    enableEditing();
+  } else {
+    enableEditing();
+  }
+
+  function isEditState() {
+    return Boolean(getIsEditingDiv());
+  }
+
+  function isCancelingEdit() {
+    return "<%= @editing_todo.id %>" === getIsEditingDiv().parentElement.id;
+  }
+
+  function getIsEditingDiv() {
+    return document.querySelector('[data-is-editing]');
+  }
+
+  function cancelEdit() {
+    var isEditing = document.querySelector('[data-is-editing]');
+    isEditing.querySelector('.todo-text').style.display = 'block';
+    isEditing.parentElement.querySelector('.edit-form').remove();
+    isEditing.removeAttribute('data-is-editing');
+  }
+
+  function enableEditing() {
+    var todo = document.getElementById("<%= @editing_todo.id %>");
+    todo.querySelector('.todo-text').style.display = 'none';
+    todo.firstElementChild.setAttribute('data-is-editing', true);
+    todo.querySelector('[data-is-editing]')
+      .insertAdjacentHTML(
+        'afterend',
+        "<%= j render 'todo_items/edit_form', todo_item: @editing_todo %>"
+      );
+    var textarea = todo.querySelector('textarea[name="todo_item[name]"]');
+    var todoName = textarea.value;
+    textarea.focus();
+    textarea.value = '';
+    textarea.value = todoName;
+  }
+
+  function setViewState() {
+    document.querySelector('[data-is-editing]').removeAttribute('data-is-editing');
+
+    for (let editForm of document.getElementsByClassName('edit-form')) {
+      editForm.remove();
+    }
+
+    for (let todoText of document.getElementsByClassName('todo-text')) {
+      todoText.style.display = 'block';
+    }
+  }
+});

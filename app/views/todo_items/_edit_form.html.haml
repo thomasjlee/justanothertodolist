@@ -1,0 +1,11 @@
+= form_with model: todo_item,
+  url: todo_list_todo_item_path(@todo_list, todo_item),
+  class: "edit-form",
+  html: { style: "width: 100%; padding: 0 0.25rem;" } do |f|
+  .input-group
+    = f.text_area :name,
+      cols: 40, rows: 1,
+      autofocus: true,
+      class: "form-control form-control-sm"
+    .input-group-append
+      = f.submit "Save", class: "btn btn-sm btn-outline-info"

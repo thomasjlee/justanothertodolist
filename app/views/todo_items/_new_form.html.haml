@@ -1,0 +1,14 @@
+= form_for @todo_list.todo_items.new,
+  remote: true,
+  authenticity_token: true,
+  url: todo_list_todo_items_path(@todo_list) do |f|
+  .input-group
+    = f.text_field :name,
+      id: :name,
+      autofocus: true,
+      required: true,
+      pattern: ".*\\S+.*",
+      class: "form-control form-control-sm"
+    .input-group-append
+      = f.button octicon('plus-small', height: 16),
+        class: "btn btn-sm btn-outline-info"

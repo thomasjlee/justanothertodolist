@@ -8,21 +8,18 @@
         name: "todo_item[completed]",
         class: "btn btn-sm #{todo_item.completed? ? 'btn-info' : 'btn-outline-info'}"
 
-    .todo-text.px-2{class: ("completed" if todo_item.completed?)}
-      = todo_item.name
+    .todo-text{class: [("completed" if todo_item.completed?), ("px-2" unless todo_item == @editing_todo)]}
+      = todo_item.name unless todo_item == @editing_todo
 
-  .edit-todo-form
-    = form_with model: todo_item,
-      url: todo_list_todo_item_path(@todo_list, todo_item),
-      class: "form-inline" do |f|
-      .input-group
-        = f.text_area :name, cols: 40, rows: 1, class: "form-control form-control-sm"
-        .input-group-append
-          = f.submit "Save", class: "btn btn-sm btn-outline-info"
+  - if todo_item == @editing_todo
+    = render 'todo_items/edit_form',
+      { todo_item: todo_item, editing_todo: @editing_todo }
 
   .d-flex.justify-content-end.align-items-start
-    %button.edit-btn.btn.btn-sm.btn-outline-warning.mr-1
-      = octicon("pencil", height: 16)
+    = link_to octicon("pencil", height: 16),
+      todo_item == @editing_todo ? todo_list_path(@todo_list) : edit_todo_list_todo_item_path(@todo_list, todo_item.id), 
+      class: "edit-btn btn btn-sm btn-outline-warning mr-1",
+      remote: true
 
     = form_for todo_item,
       url: todo_list_todo_item_path(@todo_list, todo_item.id),
