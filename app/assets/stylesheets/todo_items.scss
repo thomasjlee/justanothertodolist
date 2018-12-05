@@ -15,3 +15,8 @@
 .form-control:disabled {
   background-color: transparent;
 }
+
+.todo-text {
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
