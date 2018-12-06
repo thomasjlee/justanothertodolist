@@ -1,26 +1,29 @@
 .row.mt-5
   .col-sm-8.ml-auto.mr-auto
     .card.mb-3
-      .card-header.text-center.px-3
-        %ul.nav.justify-content-end
-          %li.nav-item
-            = link_to octicon("pencil", height: 16),
-              @editing_list ? todo_list_path(@todo_list): edit_todo_list_path(@todo_list),
-              class: "nav-link text-warning px-2"
-          %li.nav-item
-            = form_for @todo_list,
-              url: todo_list_path(@todo_list),
-              method: :delete,
-              class: "nav-link text-secondary",
-              data: { confirm: "Are you sure?" } do |f|
-              = f.button octicon("trashcan", height: 16),
-                class: "delete-todo-list py-2 px-0 text-danger",
-                style: "background-color: #f7f7f7; border: 0;"
+      .card-header.text-center.p-3
         - if @editing_list
           = render partial: 'edit_form'
         - else
           %h2= @todo_list.name
-          %p= @todo_list.description
+          %p.mb-2= @todo_list.description
+          %ul.nav.justify-content-center
+            %li.nav-item
+              = link_to "Edit",
+                @editing_list ? todo_list_path(@todo_list): edit_todo_list_path(@todo_list),
+                class: "nav-link text-secondary px-2 small"
+            %li.nav-item
+              .small.text-secondary.py-2
+                |
+            %li.nav-item
+              = form_for @todo_list,
+                url: todo_list_path(@todo_list),
+                method: :delete,
+                class: "nav-link text-secondary",
+                data: { confirm: "Are you sure?" } do |f|
+                = f.submit "Delete",
+                  class: "nav-link text-secondary p-2 small border-0 p-0 bg-transparent",
+                  style: "cursor: pointer;"
       %ul.list-group.list-group-flush#todo-items{data:{clearable: true}}
         - @todo_list_items.each do |item|
           = render "todo_items/todo_item", todo_item: item

@@ -8,6 +8,10 @@
   .form-group.text-left
     = f.label :description, class: "text-muted small pl-1"
     = f.text_area :description, id: :description, class: "form-control form-control-sm"
-  .form-group
-    = f.submit "Update", class: "btn btn-sm btn-outline-info"
-    = link_to "Cancel", todo_list_path(@todo_list), class: "btn btn-sm btn-outline-secondary"
+  .input-group.justify-content-center
+    = f.submit "Save",
+      class: "text-info small border-0 p-0 bg-transparent",
+      style: "cursor: pointer;"
+    .small.text-secondary.px-2
+      |
+    = link_to "Cancel", todo_list_path(@todo_list), class: "text-secondary small"
