@@ -1,8 +1,13 @@
 .row.mt-5
   .col-sm-8.ml-auto.mr-auto
     .card.mb-3
-      .card-header.text-center
-        %h1= @todo_list.name
+      .card-header.text-center.p-1
+        %ul.nav.justify-content-end
+          %li.nav-item
+            = link_to octicon("pencil", height: 14), "#", class: "nav-link text-secondary px-2"
+          %li.nav-item
+            = link_to octicon("trashcan", height: 14), "#", class: "nav-link text-secondary px-2"
+        %h2= @todo_list.name
         %p= @todo_list.description
       %ul.list-group.list-group-flush#todo-items{data:{clearable: true}}
         - @todo_list_items.each do |item|
