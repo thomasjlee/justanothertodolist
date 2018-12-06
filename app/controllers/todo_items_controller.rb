@@ -48,8 +48,7 @@ class TodoItemsController < ApplicationController
   end
 
   def clear_completed
-    @todo_items = @todo_list.todo_items.where(completed: true)
-    @todo_items.destroy_all
+    @todo_list.todo_items.where(completed: true).destroy_all
     redirect_to @todo_list
   end
 
