@@ -1,14 +1,26 @@
 .row.mt-5
   .col-sm-8.ml-auto.mr-auto
     .card.mb-3
-      .card-header.text-center.p-1
+      .card-header.text-center.px-3
         %ul.nav.justify-content-end
           %li.nav-item
-            = link_to octicon("pencil", height: 14), "#", class: "nav-link text-secondary px-2"
+            = link_to octicon("pencil", height: 16),
+              @editing_list ? todo_list_path(@todo_list): edit_todo_list_path(@todo_list),
+              class: "nav-link text-warning px-2"
           %li.nav-item
-            = link_to octicon("trashcan", height: 14), "#", class: "nav-link text-secondary px-2"
-        %h2= @todo_list.name
-        %p= @todo_list.description
+            = form_for @todo_list,
+              url: todo_list_path(@todo_list),
+              method: :delete,
+              class: "nav-link text-secondary",
+              data: { confirm: "Are you sure?" } do |f|
+              = f.button octicon("trashcan", height: 16),
+                class: "delete-todo-list py-2 px-0 text-danger",
+                style: "background-color: #f7f7f7; border: 0;"
+        - if @editing_list
+          = render partial: 'edit_form'
+        - else
+          %h2= @todo_list.name
+          %p= @todo_list.description
       %ul.list-group.list-group-flush#todo-items{data:{clearable: true}}
         - @todo_list_items.each do |item|
           = render "todo_items/todo_item", todo_item: item

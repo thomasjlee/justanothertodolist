@@ -20,3 +20,8 @@
   overflow-wrap: break-word;
   word-break: break-all;
 }
+
+.delete-todo-list:hover {
+  color: #bd2130 !important;
+  cursor: pointer;
+}

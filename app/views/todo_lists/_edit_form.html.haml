@@ -1,0 +1,13 @@
+= form_with model: @todo_list, local: true do |f|
+  .form-group.text-left
+    = f.label :name, class: "text-muted small pl-1"
+    = f.text_field :name,
+      id: :name,
+      autofocus: true,
+      class: "form-control form-control-lg text-info p-2"
+  .form-group.text-left
+    = f.label :description, class: "text-muted small pl-1"
+    = f.text_area :description, id: :description, class: "form-control form-control-sm"
+  .form-group
+    = f.submit "Update", class: "btn btn-sm btn-outline-info"
+    = link_to "Cancel", todo_list_path(@todo_list), class: "btn btn-sm btn-outline-secondary"
