@@ -19,5 +19,8 @@ if (<%= any_completed?(@todo_list.todo_items) %>) {
 todoText.classList.toggle('completed');
 
 completeBtn.classList.toggle('btn-info');
+completeBtn.classList.toggle('btn-completed');
 completeBtn.classList.toggle('btn-outline-info');
+completeBtn.classList.toggle('btn-not-completed');
 
+completeBtn.blur();

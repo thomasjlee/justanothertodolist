@@ -6,7 +6,7 @@
       remote: true do |f|
       = f.button octicon("check", height: 16),
         name: "todo_item[completed]",
-        class: "btn btn-sm #{todo_item.completed? ? 'btn-info' : 'btn-outline-info'}"
+        class: "btn btn-sm #{todo_item.completed? ? 'btn-completed btn-info' : 'btn-not-completed btn-outline-info'}"
 
     .todo-text{class: [("completed" if todo_item.completed?), ("px-2" unless todo_item == @editing_todo)]}
       = todo_item.name unless todo_item == @editing_todo

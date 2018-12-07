@@ -21,7 +21,12 @@
   word-break: break-all;
 }
 
-.delete-todo-list:hover {
-  color: #bd2130 !important;
-  cursor: pointer;
+.btn-completed:hover {
+  color: $white;
+  background-color: $cyan;
+}
+
+.btn-not-completed:hover {
+  color: $cyan;
+  background-color: transparent;
 }
