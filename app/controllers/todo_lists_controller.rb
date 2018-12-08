@@ -28,14 +28,18 @@ class TodoListsController < ApplicationController
     @editing_list = true
     respond_to do |format|
       format.html { render :show }
+      format.js
     end
   end
 
   def update
-    if @todo_list.update_attributes(todo_list_params)
-      redirect_to @todo_list
-    else
-      render :edit
+    respond_to do |format|
+      if @todo_list.update_attributes(todo_list_params)
+        format.html { redirect_to @todo_list }
+        format.js
+      else
+        render :edit
+      end
     end
   end
 

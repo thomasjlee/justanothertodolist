@@ -1,0 +1,5 @@
+var editForm = document.getElementById('edit-form');
+var listDetails = "<%= j render 'list_details' %>";
+
+editForm.insertAdjacentHTML('afterend', listDetails);
+editForm.remove();

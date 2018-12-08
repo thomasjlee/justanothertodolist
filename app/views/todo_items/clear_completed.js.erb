@@ -1,0 +1,5 @@
+var completedTodoLis = document.getElementsByClassName('todo-text completed');
+for (var i = completedTodoLis.length - 1; i >= 0; i--) {
+  completedTodoLis[i].parentElement.parentElement.remove();
+}
+

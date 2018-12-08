@@ -1,0 +1,22 @@
+#list-details
+  %h2= @todo_list.name
+  %p.mb-2= @todo_list.description
+  %ul.nav.justify-content-center
+    %li.nav-item
+      = link_to "Edit",
+        @editing_list ? todo_list_path(@todo_list): edit_todo_list_path(@todo_list),
+        remote: true,
+        class: "nav-link text-secondary px-2 small"
+    %li.nav-item
+      .small.text-secondary.py-2
+        |
+    %li.nav-item
+      = form_for @todo_list,
+        url: todo_list_path(@todo_list),
+        method: :delete,
+        class: "nav-link text-secondary",
+        data: { confirm: "Are you sure?" } do |f|
+        = f.submit "Delete",
+          class: "nav-link text-secondary p-2 small border-0 p-0 bg-transparent",
+          style: "cursor: pointer;"
+

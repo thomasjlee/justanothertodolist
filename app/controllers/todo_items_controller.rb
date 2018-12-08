@@ -49,7 +49,10 @@ class TodoItemsController < ApplicationController
 
   def clear_completed
     @todo_list.todo_items.where(completed: true).destroy_all
-    redirect_to @todo_list
+    respond_to do |format|
+      format.html { redirect_to @todo_list }
+      format.js
+    end
   end
 
   private
