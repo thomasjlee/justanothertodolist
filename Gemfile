@@ -59,6 +59,8 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'better_errors', '~> 2.4'
   gem 'binding_of_caller', '~> 0.8.0'
+  gem 'guard'
+  gem 'guard-rspec', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

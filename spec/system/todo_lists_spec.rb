@@ -5,7 +5,7 @@ RSpec.describe "TodoLists", type: :system do
     driven_by(:rack_test)
   end
 
-  it "creates a new todo_list" do
+  it "creates a new todo list" do
     visit root_path
     click_on "Add List"
     expect(page).to have_current_path new_todo_list_path
@@ -15,14 +15,14 @@ RSpec.describe "TodoLists", type: :system do
     expect(page).to have_current_path /todo_lists\/\d+$/
   end
 
-  it "shows a newly created todo_list" do
+  it "shows a newly created todo list" do
     todo_list = FactoryBot.create(:todo_list)
     visit root_path
     click_on todo_list.name
     expect(page).to have_current_path "/todo_lists/#{todo_list.id}"
   end
 
-  it "edits a todo_list" do
+  it "edits a todo list" do
     todo_list = FactoryBot.create(:todo_list)
     visit todo_list_path(todo_list)
     click_on "Edit"
@@ -35,7 +35,7 @@ RSpec.describe "TodoLists", type: :system do
     expect(page).to have_current_path todo_list_path(todo_list)
   end
 
-  it "deletes a todo_list" do
+  it "deletes a todo list" do
     todo_list = FactoryBot.create(:todo_list)
     visit todo_list_path(todo_list)
     expect { click_on "Delete" }.to change(TodoList, :count).by(-1)
