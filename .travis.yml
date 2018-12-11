@@ -1,0 +1,15 @@
+language: ruby
+cache: bundler
+before_script:
+- bundle exec rails db:create
+- bundle exec rails db:migrate
+- bundle exec rails assets:precompile
+script:
+- bundle exec rspec
+deploy:
+  provider: heroku
+  api_key:
+    secure: POFcVwbdAH+o0RkS5gfU36SIaVlSXBM/D4GVjzvnM6x4NgZyVkmDTPVPfbUHEuIs54qhc78cmCWGOMpmimzFm7qf9LyU2KL25Z7uquOeWb92AliAtPI8aRu1KVD5cw7K+oNHTzj6gxXkXoc5Mif8u9MjzTIyNPXSkKTOffyp4IcD9GkOERt/ychNlV+ktz6qE2bcGmg/nQ24XIV2aV/y9MezgxzaHpdP+6tAqc2FAHtiGjoj/Z/pjjquZD49AHXg3aiQrmi02WA/+1KM5SLK5HyX1ikkQOsBcWvAc8nxHtaRfiIHRpe7nvsDUp2bsKS+h7o2v4haK9TvKo+cEt2FrIGvn9TdYbw6DM8nfJohYl/RH1+WK1ftmvkYgQnetWZ3BdajMDN/W3Uvl8TlbYQ03/t2x4TJZWDzkkuhqg9pcoAZr8O08YEuS7hj5gZiDZykbORRVvXiUCNv0590BNDqL33GUT23+qt9VocXJ6YEqnxqIAT33pjdSrkI1tlQv/BRqacZO0+44R11ADlkzyZ3Kf17RhaoFLvjiF6XSdzCfmWkTGGYGArXBAWg4fufnAecQ0GzYPH1fnXyjg1tL+tVlt2VKDwWNIvCvlFgwvdknSHdeiL4SMfsfFqlCtVAP/vVlQIRIocuueiUVPDxZrg/JdZjgw4K1IhcnQecv/67pRU=
+  app: justanothertodolist
+  on:
+    repo: thomasjlee/justanothertodolist
