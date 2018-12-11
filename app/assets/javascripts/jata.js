@@ -21,14 +21,14 @@ document.addEventListener('turbolinks:load', function() {
   }
 
   function displayTodoTexts() {
-    const todoTexts = document.querySelectorAll('.todo-text');
+    var todoTexts = document.querySelectorAll('.todo-text');
     for (let todoText of todoTexts) {
       todoText.style.display = 'block';
     }
   }
 
   function hideEditForms() {
-    const editForms = document.querySelectorAll('.edit-form');
+    var editForms = document.querySelectorAll('.edit-form');
     for (let editForm of editForms) {
       editForm.style.display = 'none';
     }
