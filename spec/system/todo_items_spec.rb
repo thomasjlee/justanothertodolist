@@ -12,7 +12,7 @@ RSpec.describe "TodoItems", type: :system do
     expect {
       find("button[type='submit']").click
     }.to change(TodoItem, :count).by(1)
-    expect(page).to have_text "Boil the water!"
+    expect(page).to have_text "Boil the water"
   end
 
   it "creates a new todo item with ujs"
