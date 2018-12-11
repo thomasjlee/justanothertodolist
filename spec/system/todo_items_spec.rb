@@ -1,10 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "TodoItems", type: :system do
-  before do
-    driven_by(:rack_test)
-  end
-
   it "creates a new todo item" do
     todo_list = FactoryBot.create(:todo_list)
     visit todo_list_path(todo_list)

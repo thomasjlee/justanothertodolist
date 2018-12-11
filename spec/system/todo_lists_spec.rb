@@ -1,10 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "TodoLists", type: :system do
-  before do
-    driven_by(:rack_test)
-  end
-
   it "creates a new todo list" do
     visit root_path
     click_on "Add List"
