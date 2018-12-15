@@ -4,7 +4,7 @@ RSpec.describe "TodoItems", type: :system do
   it "creates a new todo item" do
     todo_list = FactoryBot.create(:todo_list)
     visit todo_list_path(todo_list)
-    fill_in "todo_item[name]", with: "Boil the water"
+    fill_in "todo_item[content]", with: "Boil the water"
     expect {
       find("button[type='submit']").click
     }.to change(TodoItem, :count).by(1)
@@ -22,10 +22,10 @@ RSpec.describe "TodoItems", type: :system do
     find("a[href='#{edit_todo_path}']").click
     expect(page).to have_css "form[action='#{todo_path}']"
 
-    within('form.edit-form') { fill_in "todo_item[name]",
+    within('form.edit-form') { fill_in "todo_item[content]",
                                with: "Edited todo item" }
     click_on "Save"
-    expect(todo_item.reload.name).to eq "Edited todo item"
+    expect(todo_item.reload.content).to eq "Edited todo item"
   end
 
   it "deletes a todo item with delete confirmation"

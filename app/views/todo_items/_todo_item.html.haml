@@ -8,7 +8,7 @@
         class: "btn btn-sm #{todo_item.completed? ? 'btn-completed btn-info' : 'btn-not-completed btn-outline-info'}"
 
     %p.todo-text.m-0{class: [("completed" if todo_item.completed?), ("px-2" unless todo_item == @editing_todo)]}
-      = todo_item.name unless todo_item == @editing_todo
+      = todo_item.content unless todo_item == @editing_todo
 
   - if todo_item == @editing_todo
     = render 'todo_items/edit_form',

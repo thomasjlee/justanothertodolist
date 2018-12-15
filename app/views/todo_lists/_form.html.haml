@@ -6,8 +6,8 @@
       .card-body
         = form_with model: @todo_list, local: true do |f|
           .form-group
-            = f.label :name
-            = f.text_field :name, id: :name, class: "form-control"
+            = f.label :title
+            = f.text_field :title, id: :title, class: "form-control"
           .form-group
             = f.label :description
             = f.text_area :description, id: :description, class: "form-control"

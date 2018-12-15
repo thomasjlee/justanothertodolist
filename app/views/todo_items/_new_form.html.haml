@@ -1,6 +1,6 @@
 = form_with model: [@todo_list, @todo_list.todo_items.new] do |f|
   .input-group
-    = f.text_field :name,
+    = f.text_field :content,
       autofocus: true,
       required: true,
       pattern: ".*\\S+.*",

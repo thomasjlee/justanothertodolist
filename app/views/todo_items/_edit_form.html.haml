@@ -4,8 +4,8 @@
   html: { style: "width: 100%; padding: 0 0.25rem;" } do |f|
   .input-group
     -# TODO: extract rows calculation to helper
-    = f.text_area :name,
-      rows: (todo_item.name.length / 60.0).ceil,
+    = f.text_area :content,
+      rows: (todo_item.content.length / 60.0).ceil,
       autofocus: true,
       class: "form-control form-control-sm"
     .input-group-append

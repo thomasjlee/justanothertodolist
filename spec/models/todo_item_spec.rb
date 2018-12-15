@@ -2,20 +2,20 @@ require 'rails_helper'
 
 RSpec.describe TodoItem, type: :model do
   describe "Validations" do
-    it "is valid with a name and todo list" do
+    it "is valid with content and a todo list" do
       todo_list = FactoryBot.build(:todo_list)
-      todo_item = TodoItem.new(name: "Boil the water", todo_list: todo_list)
+      todo_item = TodoItem.new(content: "Boil the water", todo_list: todo_list)
       expect(todo_item).to be_valid
     end
 
-    it "is not valid without a name" do
-      todo_item = TodoItem.new(name: nil)
+    it "is not valid without content" do
+      todo_item = TodoItem.new(content: nil)
       todo_item.valid?
-      expect(todo_item.errors.messages[:name]).to include "can't be blank"
+      expect(todo_item.errors.messages[:content]).to include "can't be blank"
     end
 
     it "is not valid without a todo list" do
-      todo_item = TodoItem.new(name: "Boil the water")
+      todo_item = TodoItem.new(content: "Boil the water")
       todo_item.valid?
       expect(todo_item.errors.messages[:todo_list]).to include "must exist"
     end

@@ -1,8 +1,8 @@
 = form_with model: @todo_list, remote: true, id: "edit-form" do |f|
   .form-group.text-left
-    = f.label :name, class: "text-muted small pl-1"
-    = f.text_field :name,
-      id: :name,
+    = f.label :title, class: "text-muted small pl-1"
+    = f.text_field :title,
+      id: :title,
       autofocus: true,
       class: "form-control form-control-lg text-info p-2"
   .form-group.text-left

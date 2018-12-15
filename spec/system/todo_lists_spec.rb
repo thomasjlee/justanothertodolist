@@ -5,7 +5,7 @@ RSpec.describe "TodoLists", type: :system do
     visit root_path
     click_on "Add List"
     expect(page).to have_current_path new_todo_list_path
-    fill_in "todo_list[name]", with: "New List"
+    fill_in "todo_list[title]", with: "New List"
     fill_in "todo_list[description]", with: "This is a new todo list."
     expect { click_on "Save" }.to change(TodoList, :count).by(1) 
     expect(page).to have_current_path /todo_lists\/\d+$/
@@ -14,7 +14,7 @@ RSpec.describe "TodoLists", type: :system do
   it "shows a newly created todo list" do
     todo_list = FactoryBot.create(:todo_list)
     visit root_path
-    click_on todo_list.name
+    click_on todo_list.title
     expect(page).to have_current_path "/todo_lists/#{todo_list.id}"
   end
 
@@ -23,10 +23,10 @@ RSpec.describe "TodoLists", type: :system do
     visit todo_list_path(todo_list)
     click_on "Edit"
     expect(page).to have_current_path "/todo_lists/#{todo_list.id}/edit"
-    fill_in "todo_list[name]", with: "Edited List"
+    fill_in "todo_list[title]", with: "Edited List"
     fill_in "todo_list[description]", with: "Edited todo list description."
     click_on "Save"
-    expect(todo_list.reload.name).to eq "Edited List"
+    expect(todo_list.reload.title).to eq "Edited List"
     expect(todo_list.reload.description).to eq "Edited todo list description."
     expect(page).to have_current_path todo_list_path(todo_list)
   end

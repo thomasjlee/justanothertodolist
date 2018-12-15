@@ -36,7 +36,7 @@ document.getElementById('todo-items').addEventListener('ajax:success', function(
         'afterend',
         "<%= j render 'todo_items/edit_form', todo_item: @editing_todo %>"
       );
-    var textarea = todo.querySelector('textarea[name="todo_item[name]"]');
+    var textarea = todo.querySelector('textarea[name="todo_item[content]"]');
     var todoName = textarea.value;
     textarea.focus();
     textarea.value = '';
