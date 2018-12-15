@@ -39,14 +39,6 @@ class TodoItemsController < ApplicationController
     end
   end
 
-  def complete
-    @todo_item.toggle!(:completed)
-    respond_to do |format|
-      format.html { redirect_to @todo_list }
-      format.js
-    end
-  end
-
   def clear_completed
     @todo_list.todo_items.where(completed: true).destroy_all
     respond_to do |format|

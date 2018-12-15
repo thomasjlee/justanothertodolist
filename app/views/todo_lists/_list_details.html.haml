@@ -11,10 +11,9 @@
       .small.text-secondary.py-2
         |
     %li.nav-item
-      = form_for @todo_list,
-        url: todo_list_path(@todo_list),
+      = form_with model: @todo_list,
         method: :delete,
-        class: "nav-link text-secondary",
+        local: true,
         data: { confirm: "Are you sure?" } do |f|
         = f.submit "Delete",
           class: "nav-link text-secondary p-2 small border-0 p-0 bg-transparent",

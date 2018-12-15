@@ -36,7 +36,7 @@ RSpec.describe "TodoItems", type: :system do
 
     visit todo_list_path(todo_item.todo_list)
     expect {
-      within("form[action='#{todo_path}']") do
+      within(".todo-row-right") do
         find("button[type='submit']").click
       end
     }.to change(TodoItem, :count).by(-1)
@@ -44,26 +44,16 @@ RSpec.describe "TodoItems", type: :system do
 
   it "completes a todo item" do
     todo_item = FactoryBot.create(:todo_item)
-    todo_path = todo_list_todo_item_path(todo_item.todo_list, todo_item)
-    complete_todo_path = complete_todo_list_todo_item_path(todo_item.todo_list, todo_item)
-
     visit todo_list_path(todo_item.todo_list)
-    within("form[action='#{complete_todo_path}']") do
-      find("button[type=submit]").click
-    end
+    find("[name='todo_item[completed]']").click
     expect(todo_item.reload.completed).to be true
   end
 
   it "uncompletes a todo item" do
     todo_item = FactoryBot.create(:todo_item, completed: true)
-    complete_todo_path = complete_todo_list_todo_item_path(todo_item.todo_list, todo_item)
-
     visit todo_list_path(todo_item.todo_list)
     expect(page).to have_css "button.btn-completed"
-
-    within("form[action='#{complete_todo_path}']") do
-      find("button[type=submit]").click
-    end
+    find("[name='todo_item[completed]']").click
     expect(todo_item.reload.completed).to be false
   end
 end

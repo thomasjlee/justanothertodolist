@@ -1,33 +1,29 @@
 %li.todo-item.list-group-item.d-flex.justify-content-between{id: [todo_item.id]}
   .d-flex
-    = form_for todo_item,
-      url: complete_todo_list_todo_item_path(@todo_list, todo_item.id),
-      authenticity_token: true,
-      remote: true do |f|
+    = form_with model: [@todo_list, todo_item],
+      method: :patch do |f|
       = f.button octicon("check", height: 16),
         name: "todo_item[completed]",
+        value: !todo_item.completed,
         class: "btn btn-sm #{todo_item.completed? ? 'btn-completed btn-info' : 'btn-not-completed btn-outline-info'}"
 
-    - # TODO: Make this a p tag instead of a div.
-    .todo-text{class: [("completed" if todo_item.completed?), ("px-2" unless todo_item == @editing_todo)]}
+    %p.todo-text.m-0{class: [("completed" if todo_item.completed?), ("px-2" unless todo_item == @editing_todo)]}
       = todo_item.name unless todo_item == @editing_todo
 
   - if todo_item == @editing_todo
     = render 'todo_items/edit_form',
       { todo_item: todo_item, editing_todo: @editing_todo }
 
-  .d-flex.justify-content-end.align-items-start
+  .todo-row-right.d-flex.justify-content-end.align-items-start
     = link_to octicon("pencil", height: 16),
       todo_item == @editing_todo ? todo_list_path(@todo_list) : edit_todo_list_todo_item_path(@todo_list, todo_item.id), 
       class: "edit-btn btn btn-sm btn-outline-warning mr-1",
       remote: true
 
-    = form_for todo_item,
-      url: todo_list_todo_item_path(@todo_list, todo_item.id),
+    = form_with model: [@todo_list, todo_item],
       method: :delete,
-      authenticity_token: true,
-      remote: true,
       data: { confirm: "Are you sure?" } do |f|
       = f.button octicon("trashcan", :height => 16),
-        class: "btn btn-sm btn-outline-danger"
+        class: "btn btn-sm btn-outline-danger",
+        data: { disable_with: octicon("trashcan", height: 16) }
 

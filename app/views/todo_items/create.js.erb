@@ -3,7 +3,7 @@ document.getElementById('todo-items').insertAdjacentHTML(
   "<%= j render 'todo_items/todo_item', todo_item: @todo_item %>"
 );
 
-document.querySelector('input#name').value = '';
+document.querySelector('[name="todo_item[name]"]').value = '';
 
 jata.toggleViewState();
 
