@@ -11,8 +11,6 @@ RSpec.describe "TodoItems", type: :system do
     expect(page).to have_text "Boil the water"
   end
 
-  it "creates a new todo item with ujs"
-
   it "edits a todo item" do
     todo_item      = FactoryBot.create(:todo_item)
     todo_path      = todo_list_todo_item_path(todo_item.todo_list, todo_item)
@@ -28,7 +26,27 @@ RSpec.describe "TodoItems", type: :system do
     expect(todo_item.reload.content).to eq "Edited todo item"
   end
 
-  it "deletes a todo item with delete confirmation"
+  describe "when the edit todo button is clicked", js: true do
+    before(:all) do
+      @todo_item = FactoryBot.create(:todo_item)
+      @item_path = todo_list_todo_item_path(@todo_item.todo_list, @todo_item)
+      @edit_item_path = edit_todo_list_todo_item_path(@todo_item.todo_list, @todo_item)
+      @edit_link_css  = "a[href='#{@edit_item_path}']"
+      @edit_form_css  = "form[action='#{@item_path}'] textarea[name='todo_item[content]']"
+    end
+
+    it "shows the edit todo form" do
+      visit todo_list_path(@todo_item.todo_list)
+      find(@edit_link_css).click
+      expect(page).to have_css @edit_form_css
+    end
+
+    it "hides the edit todo form if the form is already shown" do
+      visit todo_list_path(@todo_item.todo_list)
+      2.times { find(@edit_link_css).click }
+      expect(page).to_not have_css @edit_form_css
+    end
+  end
 
   it "deletes a todo item" do
     todo_item = FactoryBot.create(:todo_item)
