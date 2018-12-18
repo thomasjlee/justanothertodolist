@@ -27,7 +27,7 @@ RSpec.describe "TodoItems", type: :system do
   end
 
   describe "when the edit todo button is clicked", js: true do
-    before(:all) do
+    before(:each) do
       @todo_item = FactoryBot.create(:todo_item)
       @item_path = todo_list_todo_item_path(@todo_item.todo_list, @todo_item)
       @edit_item_path = edit_todo_list_todo_item_path(@todo_item.todo_list, @todo_item)

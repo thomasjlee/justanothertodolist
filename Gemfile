@@ -42,6 +42,7 @@ group :test do
   gem 'capybara', '~> 2.17.0'
   gem 'selenium-webdriver', '~> 3.1'
   gem 'chromedriver-helper', '~> 2.1'
+  gem 'database_cleaner', '~> 1.7'
 end
 
 group :development, :test do
