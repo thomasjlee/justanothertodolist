@@ -1,5 +1,5 @@
 %li.todo-item.list-group-item.d-flex.justify-content-between{id: [todo_item.id]}
-  .d-flex
+  .todo-row-left.d-flex
     = form_with model: [@todo_list, todo_item],
       method: :patch do |f|
       = f.button octicon("check", height: 16),
