@@ -21,4 +21,16 @@ RSpec.describe TodoItem, type: :model do
     association = described_class.reflect_on_association(:todo_list)
     expect(association.macro).to eq :belongs_to
   end
+
+  describe "#textarea_rows" do
+    it "divides content length by 60 to set textarea rows" do
+      short_todo_item  = FactoryBot.build(:todo_item, content: "a" * 60)
+      medium_todo_item = FactoryBot.build(:todo_item, content: "a" * 61)
+      long_todo_item   = FactoryBot.build(:todo_item, content: "a" * 121)
+
+      expect(short_todo_item.textarea_rows).to  be 1
+      expect(medium_todo_item.textarea_rows).to be 2
+      expect(long_todo_item.textarea_rows).to   be 3
+    end
+  end
 end
