@@ -1,10 +1,11 @@
 = form_with model: [@todo_list, @todo_list.todo_items.new] do |f|
   .input-group
     = f.text_field :content,
-      autofocus: true,
-      required: true,
-      pattern: ".*\\S+.*",
-      class: "form-control form-control-sm"
+      autofocus:   true,
+      required:    true,
+      pattern:     ".*\\S+.*",
+      id:          "new_todo_item_content",
+      class:       "form-control form-control-sm"
     .input-group-append
       = f.button octicon('plus-small', height: 16),
         class: "btn btn-sm btn-outline-info",
