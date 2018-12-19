@@ -67,4 +67,8 @@ guard :rspec, cmd: "bundle exec rspec" do
   watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$}) do |m|
     Dir[File.join("**/#{m[1]}.feature")][0] || "spec/acceptance"
   end
+
+  # js.erb and global jata.js
+  watch(%r{^app/assets/javascripts/jata\.js}) { "#{rspec.spec_dir}/system" }
+  watch(%r{^app/views/(.+)/(.+)\.js\.erb})    { "#{rspec.spec_dir}/system" }
 end
