@@ -1,7 +1,7 @@
 if (isEditing() && isCancelingEdit()) {
   cancelEdit();
 } else if (isEditing()) {
-  setViewState();
+  jata.setViewState();
   enableEditing();
 } else {
   enableEditing();
@@ -39,14 +39,5 @@ function enableEditing() {
   textarea.focus();
   textarea.value = '';
   textarea.value = todoContent;
-}
-
-function setViewState() {
-  for (let editForm of document.getElementsByClassName('edit-form')) {
-    editForm.remove();
-  }
-  for (let todoText of document.getElementsByClassName('todo-text')) {
-    todoText.style.display = 'block';
-  }
 }
 

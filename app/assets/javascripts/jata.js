@@ -2,10 +2,10 @@ document.addEventListener('turbolinks:load', function() {
   window.jata = {
     clearCompletedButton:
       document.querySelector('form[action$="clear_completed"] input[type=submit]'),
-    toggleClearCompletedButton : toggleClearCompletedButton,
-    hideEditForms              : hideEditForms,
-    displayTodoTexts           : displayTodoTexts,
-    toggleViewState            : toggleViewState
+    toggleClearCompletedButton: toggleClearCompletedButton,
+    removeEditForms           : removeEditForms,
+    displayTodoTexts          : displayTodoTexts,
+    setViewState              : setViewState
   }
 
   function toggleClearCompletedButton() {
@@ -27,15 +27,14 @@ document.addEventListener('turbolinks:load', function() {
     }
   }
 
-  function hideEditForms() {
-    var editForms = document.querySelectorAll('.edit-form');
-    for (let editForm of editForms) {
-      editForm.style.display = 'none';
+  function removeEditForms() {
+    for (let editForm of document.getElementsByClassName('edit-form')) {
+      editForm.remove();
     }
   }
 
-  function toggleViewState() {
+  function setViewState() {
     jata.displayTodoTexts();
-    jata.hideEditForms();
+    jata.removeEditForms();
   }
 });

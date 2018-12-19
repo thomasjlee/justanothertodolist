@@ -1,7 +1,7 @@
-jata.toggleViewState();
+jata.setViewState();
 
 var todoItems = document.getElementById('todo-items');
-var todoItem = document.getElementById("<%= @todo_item.id %>");
+var todoItem  = document.getElementById("<%= @todo_item.id %>");
 
 todoItem.parentNode.removeChild(todoItem);
 
