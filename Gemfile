@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'jquery-rails'
-gem 'bootstrap', '~> 4.0.0'
+gem 'bootstrap', '~> 4.1.3'
 gem 'octicons_helper'
 gem 'haml-rails', '~> 1.0'
 gem 'bootsnap', '~> 1.3.2'
