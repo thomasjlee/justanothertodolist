@@ -1,12 +1,11 @@
 = form_with model: todo_item,
   url: todo_list_todo_item_path(@todo_list, todo_item),
-  class: "edit-form",
-  html: { style: "width: 100%; padding: 0 0.25rem;" } do |f|
-  .input-group
-    = f.text_area :content,
-      rows: todo_item.textarea_rows,
-      autofocus: true,
-      id: "edit_todo_item_content_#{todo_item.id}",
-      class: "form-control form-control-sm"
-    .input-group-append
-      = f.submit "Save", class: "btn btn-sm btn-outline-info"
+  class: "edit-form w-100 px-1" do |f|
+  = f.text_area :content,
+    rows: todo_item.textarea_rows,
+    autofocus: true,
+    id: "edit_todo_item_content_#{todo_item.id}",
+    class: "form-control border-0 shadow-none px-1 py-0"
+  = f.submit "Save",
+    class: "form-control form-control-sm text-info mt-1 py-0 px-1 border-0 rounded-0 w-auto",
+    style: "font-size: 80%"
