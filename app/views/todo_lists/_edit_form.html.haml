@@ -2,12 +2,14 @@
   .form-group.text-left.mb-0
     = f.label :title, class: "text-muted small pl-1 mb-0"
     = f.text_field :title,
-      id: :title,
       autofocus: true,
-      class: "form-control form-control-lg text-info border-0 shadow-none py-0 pl-1"
-  .form-group.text-left.mb-0
+      id: :title,
+      class: "form-control form-control-lg bg-light text-info border-0 shadow-none py-0 pl-1"
+  .form-group.text-left.mb-3
     = f.label :description, class: "text-muted small pl-1 mb-2"
-    = f.text_area :description, id: :description, class: "form-control form-control-sm border-0 shadow-none pl-1"
+    = f.text_area :description,
+      id: :description,
+      class: "form-control form-control-sm bg-light border-0 shadow-none pl-1"
   .input-group.justify-content-center
     = f.submit "Save",
       class: "text-info small border-0 p-0 bg-transparent",
