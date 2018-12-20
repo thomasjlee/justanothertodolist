@@ -34,6 +34,10 @@ a {
   color: $cyan;
 }
 
+#new-list-btn:hover {
+  background-color: $cyan !important;
+}
+
 .list-group-item {
   padding: 0.5rem 0.5rem;
 }
@@ -44,13 +48,20 @@ a {
 }
 
 .clear-completed-btn {
-  @extend .form-control, .btn, .rounded-0, .border-0, .shadow-sm;
+  @extend .form-control, .btn, .bg-white, .rounded-0, .border-0, .shadow-sm;
   &--enabled {
     @extend .btn-outline-info, .shadow-lg;
+    &:hover {
+      @extend .bg-info;
+    }
   }
   &--disabled {
     @extend .btn-outline-secondary;
   }
+}
+
+.all-lists-btn:hover {
+  background-color: $cyan !important;
 }
 
 .form-control:disabled {

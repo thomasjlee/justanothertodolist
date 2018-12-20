@@ -8,5 +8,7 @@
             %p.text-dark.mb-0= list.description
 .row.text-center
   .col-md-8.ml-auto.mr-auto
-    = link_to "New List", new_todo_list_path, class: "btn btn-outline-info border-0 rounded-0 shadow-lg"
+    = link_to "New List", new_todo_list_path,
+      id: "new-list-btn",
+      class: "btn btn-outline-info bg-white border-0 rounded-0 shadow-lg"
 

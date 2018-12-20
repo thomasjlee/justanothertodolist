@@ -26,5 +26,5 @@
         method: :delete,
         form_class: "mr-2",
         class: "clear-completed-btn #{ any_completed?(@todo_list_items) ? 'clear-completed-btn--enabled' : 'clear-completed-btn--disabled' }"
-      = link_to "All Lists", todo_lists_path, class: "btn btn-outline-info border-0 rounded-0 shadow-lg"
+      = link_to "All Lists", todo_lists_path, class: "all-lists-btn btn btn-outline-info bg-white border-0 rounded-0 shadow-lg"
 
