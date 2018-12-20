@@ -1,0 +1,7 @@
+var todo_item_content = document.getElementById("todo_item_content_<%= @todo_item.id %>");
+var updated_todo_item_content = document.getElementById("edit_todo_item_content_<%= @todo_item.id %>").value;
+
+todo_item_content.textContent = updated_todo_item_content;
+
+jata.setViewState();
+

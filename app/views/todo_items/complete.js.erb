@@ -1,0 +1,18 @@
+jata.setViewState();
+
+if (<%= any_completed?(@todo_list.todo_items) %>) {
+  jata.enableClearCompletedButton();
+} else {
+  jata.disableClearCompletedButton();
+}
+
+document.getElementById("todo_item_content_<%= @todo_item.id %>").classList.toggle('completed');
+
+var completeButton = document.getElementById("<%= @todo_item.id %>").querySelector("button[name='todo_item[completed]']");
+
+completeButton.value = <%= !@todo_item.completed %>;
+completeButton.classList.toggle('btn-info');
+completeButton.classList.toggle('btn-completed');
+completeButton.classList.toggle('btn-outline-info');
+completeButton.classList.toggle('btn-not-completed');
+completeButton.blur();
