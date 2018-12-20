@@ -11,14 +11,14 @@ document.addEventListener('turbolinks:load', function() {
 
   function enableClearCompletedButton() {
     jata.clearCompletedButton.removeAttribute('disabled');
-    jata.clearCompletedButton.classList.add('clickable', 'text-info', 'border-info');
-    jata.clearCompletedButton.classList.remove('text-secondary', 'border-secondary');
+    jata.clearCompletedButton.classList.add('clear-completed-btn--enabled');
+    jata.clearCompletedButton.classList.remove('clear-completed-btn--disabled');
   }
 
   function disableClearCompletedButton() {
     jata.clearCompletedButton.setAttribute('disabled', true);
-    jata.clearCompletedButton.classList.add('text-secondary', 'border-secondary');
-    jata.clearCompletedButton.classList.remove('clickable', 'text-info', 'border-info');
+    jata.clearCompletedButton.classList.add('clear-completed-btn--disabled');
+    jata.clearCompletedButton.classList.remove('clear-completed-btn--enabled');
   }
 
   function displayTodoTexts() {

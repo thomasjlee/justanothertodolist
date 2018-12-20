@@ -5,7 +5,7 @@
       = f.button octicon("check", height: 16),
         name: "todo_item[completed]",
         value: !todo_item.completed,
-        class: "btn btn-sm #{todo_item.completed? ? 'btn-completed btn-info' : 'btn-not-completed btn-outline-info'}"
+        class: "btn btn-sm rounded-circle #{todo_item.completed? ? 'btn-completed btn-info' : 'btn-not-completed btn-outline-info'}"
 
     %p.todo-text.m-0{class: [("completed" if todo_item.completed?), ("px-2" unless todo_item == @editing_todo)], id: "todo_item_content_#{todo_item.id}"}
       = todo_item.content unless todo_item == @editing_todo
@@ -17,13 +17,13 @@
   .todo-row-right.d-flex.justify-content-end.align-items-start
     = link_to octicon("pencil", height: 16),
       todo_item == @editing_todo ? todo_list_path(@todo_list) : edit_todo_list_todo_item_path(@todo_list, todo_item.id), 
-      class: "edit-btn btn btn-sm btn-outline-warning mr-1",
+      class: "edit-btn btn btn-sm btn-outline-warning rounded-circle mr-1",
       remote: true
 
     = form_with model: [@todo_list, todo_item],
       method: :delete,
       data: { confirm: "Are you sure?" } do |f|
       = f.button octicon("trashcan", :height => 16),
-        class: "btn btn-sm btn-outline-danger",
+        class: "btn btn-sm btn-outline-danger rounded-circle",
         data: { disable_with: octicon("trashcan", height: 16) }
 

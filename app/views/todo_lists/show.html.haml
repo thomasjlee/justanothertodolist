@@ -1,7 +1,7 @@
 .row.mt-5
   .col-sm-8.ml-auto.mr-auto
-    .card.mb-3
-      .card-header.text-center.p-3
+    .card.mb-4.border-0.rounded-0
+      .card-body.text-center.p-3
         - if @editing_list
           = render 'edit_form'
         - else
@@ -12,11 +12,11 @@
 
 .row.text-center
   .col-sm-8.ml-auto.mr-auto
-    .card
-      .card-header.p-2
+    .card.border-0.rounded-0.bg-white
+      .card-body.p-2
         = render "todo_items/new_form"
 
-.row.text-center.mt-3
+.row.text-center.mt-4
   .col-sm-8.ml-auto.mr-auto
     .d-inline-flex
       = button_to "Clear Completed",
@@ -24,6 +24,7 @@
         disabled: !any_completed?(@todo_list_items),
         remote: true,
         method: :delete,
-        class: "form-control #{ any_completed?(@todo_list_items) ? 'clickable text-info border-info' : 'text-secondary border-secondary' }",
-        form_class: "mx-1"
-      = link_to "All Lists", todo_lists_path, class: "btn btn-outline-info"
+        form_class: "mr-2",
+        class: "clear-completed-btn #{ any_completed?(@todo_list_items) ? 'clear-completed-btn--enabled' : 'clear-completed-btn--disabled' }"
+      = link_to "All Lists", todo_lists_path, class: "btn btn-outline-info border-0 rounded-0 shadow-lg"
+

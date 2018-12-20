@@ -5,9 +5,8 @@
       required:    true,
       pattern:     ".*\\S+.*",
       id:          "new_todo_item_content",
-      class:       "form-control form-control-sm"
-    .input-group-append
-      = f.button octicon('plus-small', height: 16),
-        class: "btn btn-sm btn-outline-info",
-        data: { disable_with: octicon('plus-small', height: 16) }
+      class:       "form-control form-control-sm border-0 shadow-none py-0 px-2"
+    = f.button octicon('plus', height: 16),
+      class: "btn btn-sm btn-outline-info rounded-circle",
+      data: { disable_with: octicon('plus', height: 16) }
 

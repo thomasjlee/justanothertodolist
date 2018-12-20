@@ -18,7 +18,7 @@ a {
 
 /* Bootstrap */
 .card {
-  @extend .shadow;
+  @extend .shadow-lg;
 }
 
 .btn {
@@ -32,26 +32,29 @@ a {
 
 .completed {
   text-decoration: line-through;
+  @extend .text-black-50;
 }
 
-.clickable:hover {
-  cursor: pointer;
-  background-color: #17A2B8;
-  color: #FFFFFF !important;
+.clear-completed-btn {
+  @extend .form-control, .btn, .rounded-0, .border-0, .shadow-sm;
+  &--enabled {
+    @extend .btn-outline-info, .shadow-lg;
+  }
+  &--disabled {
+    @extend .btn-outline-secondary;
+  }
 }
+
+
 
 .form-control:disabled {
   background-color: transparent;
 }
 
 .todo-text {
+  @extend .text-dark;
   overflow-wrap: break-word;
   word-break: break-all;
-}
-
-.btn-completed:hover {
-  color: $white;
-  background-color: $cyan;
 }
 
 .btn-not-completed:hover {
