@@ -6,7 +6,7 @@
           = render 'edit_form'
         - else
           = render 'todo_lists/list_details'
-      %ul.list-group.list-group-flush#todo-items{data:{clearable: true}}
+      %ul.list-group.list-group-flush#todo-items
         - @todo_list_items.each do |item|
           = render "todo_items/todo_item", todo_item: item
 

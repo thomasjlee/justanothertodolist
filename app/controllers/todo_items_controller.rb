@@ -24,10 +24,16 @@ class TodoItemsController < ApplicationController
   end
 
   def update
-    if @todo_item.update_attributes(todo_item_params)
-      redirect_to @todo_list
-    else
-      redirect_back(fallback_location: root_path)
+    respond_to do |format|
+      if @todo_item.update_attributes(todo_item_params)
+        format.html { redirect_to @todo_list }
+        format.js do
+          render "update"   if params[:todo_item][:content]
+          render "complete" if params[:todo_item][:completed]
+        end
+      else
+        redirect_back(fallback_location: root_path)
+      end
     end
   end
 
