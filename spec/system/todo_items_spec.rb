@@ -5,7 +5,7 @@ RSpec.describe "TodoItems", type: :system do
     it "creates a new todo item" do
       todo_list = FactoryBot.create(:todo_list)
       visit todo_list_path(todo_list)
-      fill_in "todo_item[content]", with: "Boil the water"
+      fill_in "new_todo_item_content", with: "Boil the water"
       expect {
         find("button[type='submit']").click
       }.to change(TodoItem, :count).by(1)
@@ -15,9 +15,9 @@ RSpec.describe "TodoItems", type: :system do
     it "clears the new todo form", js: true do
       todo_list = FactoryBot.create(:todo_list)
       visit todo_list_path(todo_list)
-      fill_in "todo_item[content]", with: "Boil the water."
+      fill_in "new_todo_item_content", with: "Boil the water."
       find("button[type='submit']").click
-      expect(find_field("todo_item[content]").value).to eq ""
+      expect(find_field("new_todo_item_content").value).to eq ""
     end
 
     it "clears the new todo form even when an edit todo button was clicked", js: true do
@@ -27,11 +27,11 @@ RSpec.describe "TodoItems", type: :system do
 
       visit todo_list_path(todo_item.todo_list)
       find("a[href='#{edit_todo_path}']").click
-      fill_in "todo_item[content]", with: "Grind the coffee."
+      fill_in "new_todo_item_content", with: "Grind the coffee."
       find("#{new_todo_form} button[type='submit']").click
 
       within(new_todo_form) do
-        expect(find_field("todo_item[content]").value).to eq ""
+        expect(find_field("new_todo_item_content").value).to eq ""
       end
     end
   end
