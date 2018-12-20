@@ -4,3 +4,8 @@ var editForm = "<%= j render 'edit_form' %>";
 listDetails.insertAdjacentHTML('afterend', editForm);
 listDetails.remove();
 
+var todoListTitleInput = document.getElementById('title');
+var todoListTitle = todoListTitleInput.value;
+todoListTitleInput.focus();
+todoListTitleInput.value = '';
+todoListTitleInput.value = todoListTitle;
