@@ -1,3 +1,4 @@
+/* Base */
 ul {
   list-style-type: none;
   padding-left: 0;
@@ -15,3 +16,45 @@ a {
   }
 }
 
+/* Bootstrap */
+.card {
+  @extend .shadow;
+}
+
+.btn {
+  @extend .shadow-sm;
+}
+
+/* Custom */
+.list-group-item {
+  padding: 0.5rem 0.5rem;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.clickable:hover {
+  cursor: pointer;
+  background-color: #17A2B8;
+  color: #FFFFFF !important;
+}
+
+.form-control:disabled {
+  background-color: transparent;
+}
+
+.todo-text {
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+.btn-completed:hover {
+  color: $white;
+  background-color: $cyan;
+}
+
+.btn-not-completed:hover {
+  color: $cyan;
+  background-color: transparent;
+}
