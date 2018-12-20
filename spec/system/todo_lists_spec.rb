@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "TodoLists", type: :system do
   it "creates a new todo list" do
     visit root_path
-    click_on "Add List"
+    click_on "New List"
     expect(page).to have_current_path new_todo_list_path
     fill_in "todo_list[title]", with: "New List"
     fill_in "todo_list[description]", with: "This is a new todo list."

@@ -26,6 +26,14 @@ a {
 }
 
 /* Custom */
+.todo-list__card:hover {
+  background-color: $light;
+}
+
+.todo-list__title:hover {
+  color: $cyan;
+}
+
 .list-group-item {
   padding: 0.5rem 0.5rem;
 }
@@ -44,8 +52,6 @@ a {
     @extend .btn-outline-secondary;
   }
 }
-
-
 
 .form-control:disabled {
   background-color: transparent;
