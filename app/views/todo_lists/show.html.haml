@@ -1,11 +1,11 @@
-.row.mt-5
+.row
   .col-sm-8.ml-auto.mr-auto
     .card.mb-4.border-0.rounded-0
       .card-body.text-center.p-3
         - if @editing_list
           = render 'edit_form'
         - else
-          = render 'todo_lists/list_details'
+          = render 'todo_lists/todo_list_details'
       %ul.list-group.list-group-flush#todo-items
         - @todo_list_items.each do |item|
           = render "todo_items/todo_item", todo_item: item
@@ -16,7 +16,7 @@
       .card-body.p-2
         = render "todo_items/new_form"
 
-.row.text-center.mt-4.mb-5
+.row.text-center.mt-4
   .col-sm-8.ml-auto.mr-auto
     .d-inline-flex
       = button_to "Clear Completed",
@@ -25,6 +25,7 @@
         remote: true,
         method: :delete,
         form_class: "mr-2",
+        id: "clear_completed_button",
         class: "clear-completed-btn #{ any_completed?(@todo_list_items) ? 'clear-completed-btn--enabled' : 'clear-completed-btn--disabled' }"
       = link_to "All Lists", todo_lists_path, class: "all-lists-btn btn btn-outline-info bg-white border-0 rounded-0 shadow-lg"
 

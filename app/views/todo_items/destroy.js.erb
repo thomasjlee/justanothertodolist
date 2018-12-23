@@ -1,14 +1,9 @@
-// Tested 🗸
-jata.setViewState();
+Jata.setViewState();
 
 var todoItems = document.getElementById('todo-items');
 var todoItem  = document.getElementById("<%= @todo_item.id %>");
 
 todoItem.parentNode.removeChild(todoItem);
 
-if (<%= any_completed?(@todo_list.todo_items) %>) {
-  jata.enableClearCompletedButton();
-} else {
-  jata.disableClearCompletedButton();
-}
+Jata.toggleClearCompletedButton(<%= any_completed?(@todo_list.todo_items) %>);
 

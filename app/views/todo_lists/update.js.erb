@@ -1,6 +1,6 @@
-// Tested 🗸
-var editForm = document.getElementById('edit-form');
-var listDetails = "<%= j render 'list_details' %>";
+var editForm = document.getElementById('edit_todo_list_form');
+var todoListDetails = "<%= j render 'todo_list_details' %>";
 
-editForm.insertAdjacentHTML('afterend', listDetails);
+editForm.insertAdjacentHTML('afterend', todoListDetails);
 editForm.remove();
+

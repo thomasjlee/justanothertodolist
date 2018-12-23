@@ -35,7 +35,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
       end
 
       it "replaces the edit todo list form with todo list details" do
-        expect(page).to have_css "div#list-details"
+        expect(page).to have_css "div#todo_list_details"
         expect(page).to_not have_field "todo_list[title]"
         expect(page).to_not have_field "todo_list[description]"
       end
@@ -156,11 +156,10 @@ RSpec.describe "JavaScripts", type: :system, js: true do
       end
 
       it "removes the corresponding todo item from the DOM" do
-        destroy_todo_item_path = todo_list_todo_item_path(@todo_list, @todo_item_to_destroy)
         todo_li = find_by_id(@todo_item_to_destroy.id)
         within(todo_li) {
-          within(page.find_by_id("destroy_todo_item_#{@todo_item_to_destroy.id}")) {
-            find("button[type=submit]").click
+          within(find("form#destroy_todo_item_#{@todo_item_to_destroy.id}")) {
+            find("button[type='submit']").click
           }
         }
         page.driver.browser.switch_to.alert.accept
@@ -191,41 +190,52 @@ RSpec.describe "JavaScripts", type: :system, js: true do
 
       context "When completed" do
         before :each do
-          todo_li = find_by_id(@todo_item.id)
-          @complete_button = within(todo_li) { find("button[name='todo_item[completed]']") }
-          @complete_button.click
+          @todo_li = find_by_id(@todo_item.id)
+          within(@todo_li) {
+            find("button[name='todo_item[completed]']")
+          }.click
         end
 
-        it "sets the form submit value to false" do
-          expect(@complete_button[:value]).to eq "true"
+        it "toggles the corresponding complete button" do
+          complete_button = within(@todo_li) { find("button[name='todo_item[completed]']") }
+          expect(complete_button[:class]).to have_text "btn-completed"
         end
 
-        it "enables the clear completed button if completed" do
+        it "sets the complete button to completed state" do
           expect(find("input.clear-completed-btn")[:class]).to have_text "clear-completed-btn--enabled"
         end
       end
 
       context "When not completed" do
-        it "sets the form submit value to true" do
+        it "sets the complete button to uncompleted state" do
           todo_li = find_by_id(@todo_item.id)
-          @complete_button = within(todo_li) { find("button[name='todo_item[completed]']") }
-          2.times { @complete_button.click }
-          expect(@complete_button[:value]).to eq "false"
+          complete_button = within(todo_li) { find("button[name='todo_item[completed]']") }
+          2.times { complete_button.click }
+          expect(
+            within(todo_li) { find("button[name='todo_item[completed]']")[:class] }
+          ).to have_text "btn-not-completed"
         end
       end
     end
 
     context "When clearing completed todo items" do
-      it "removes all completed todo items from the DOM" do
-        todo_list = FactoryBot.create(:todo_list)
-        todo_item_one = FactoryBot.create(:todo_item, todo_list: todo_list,
+      before :each do
+        @todo_list = FactoryBot.create(:todo_list)
+        @todo_item_one = FactoryBot.create(:todo_item, todo_list: @todo_list,
                                           content: "Steam the milk", completed: true)
-        todo_item_two = FactoryBot.create(:todo_item, todo_list: todo_list,
+        @todo_item_two = FactoryBot.create(:todo_item, todo_list: @todo_list,
                                           content: "Grind the beans", completed: true)
-        visit todo_list_path(todo_list)
+        visit todo_list_path(@todo_list)
         click_on "Clear Completed"
+      end
+
+      it "removes all completed todo items from the DOM" do
         expect(page).to_not have_content "Steam the milk"
         expect(page).to_not have_content "Grind the beans"
+      end
+
+      it "disables the clear completed button" do
+        expect(find_by_id("clear_completed_button")[:disabled]).to have_text "true"
       end
     end
   end

@@ -1,50 +1,50 @@
 document.addEventListener('turbolinks:load', function() {
-  window.jata = {
-    clearCompletedButton:
-      document.querySelector('form[action$="clear_completed"] input[type=submit]'),
-    enableClearCompletedButton  : enableClearCompletedButton,
-    disableClearCompletedButton : disableClearCompletedButton,
-    displayTodoTexts            : displayTodoTexts,
-    removeEditForms             : removeEditForms,
-    setViewState                : setViewState
+  window.Jata = new Jata();
+
+  function Jata() {
+    this.clearCompletedButton = document.getElementById("clear_completed_button");
   }
 
-  // TODO: add method toggleClearCompletedButton, which takes an optional param anyCompleted
-  // (if anyCompleted is false or omitted, disable the clear completed button)
+  Jata.prototype.focus = function(domElement) {
+    var inputText = domElement.value;
+    domElement.focus();
+    domElement.value = '';
+    domElement.value = inputText;
+  };
 
-  // Tested 🗸
-  function enableClearCompletedButton() {
-    jata.clearCompletedButton.removeAttribute('disabled');
-    jata.clearCompletedButton.classList.add('clear-completed-btn--enabled');
-    jata.clearCompletedButton.classList.remove('clear-completed-btn--disabled');
-  }
+  Jata.prototype.setViewState = function() {
+    this._displayTodoContents();
+    this._removeEditForms();
+  };
 
-  // Tested 🗸
-  function disableClearCompletedButton() {
-    jata.clearCompletedButton.setAttribute('disabled', true);
-    jata.clearCompletedButton.classList.add('clear-completed-btn--disabled');
-    jata.clearCompletedButton.classList.remove('clear-completed-btn--enabled');
-  }
+  Jata.prototype.toggleClearCompletedButton = function(anyCompletedTodoItems) {
+    this.clearCompletedButton && anyCompletedTodoItems
+      ? this._enableClearCompletedButton()
+      : this._disableClearCompletedButton();
+  };
 
-  // Tested 🗸
-  function displayTodoTexts() {
-    var todoTexts = document.querySelectorAll('.todo-text');
-    for (let todoText of todoTexts) {
+  Jata.prototype._displayTodoContents = function() {
+    for (let todoText of document.querySelectorAll('.todo-text')) {
       todoText.style.display = 'block';
     }
-  }
+  };
 
-  // Tested 🗸
-  function removeEditForms() {
+  Jata.prototype._removeEditForms = function() {
     for (let editForm of document.getElementsByClassName('edit-form')) {
       editForm.remove();
     }
-  }
+  };
 
-  // Tested 🗸
-  function setViewState() {
-    jata.displayTodoTexts();
-    jata.removeEditForms();
-  }
+  Jata.prototype._enableClearCompletedButton = function() {
+    this.clearCompletedButton.removeAttribute('disabled');
+    this.clearCompletedButton.classList.add('clear-completed-btn--enabled');
+    this.clearCompletedButton.classList.remove('clear-completed-btn--disabled');
+  };
+
+  Jata.prototype._disableClearCompletedButton = function() {
+    this.clearCompletedButton.setAttribute('disabled', true);
+    this.clearCompletedButton.classList.add('clear-completed-btn--disabled');
+    this.clearCompletedButton.classList.remove('clear-completed-btn--enabled');
+  };
 });
 

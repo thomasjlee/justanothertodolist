@@ -1,11 +1,5 @@
-// Tested 🗸
-jata.setViewState();
-
-if (<%= any_completed?(@todo_list.todo_items) %>) {
-  jata.enableClearCompletedButton();
-} else {
-  jata.disableClearCompletedButton();
-}
+Jata.setViewState();
+Jata.toggleClearCompletedButton(<%= any_completed?(@todo_list.todo_items) %>);
 
 document.getElementById("todo_item_content_<%= @todo_item.id %>").classList.toggle('completed');
 
@@ -17,3 +11,4 @@ completeButton.classList.toggle('btn-completed');
 completeButton.classList.toggle('btn-outline-info');
 completeButton.classList.toggle('btn-not-completed');
 completeButton.blur();
+

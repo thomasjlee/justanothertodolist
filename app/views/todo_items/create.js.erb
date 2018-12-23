@@ -1,4 +1,3 @@
-// Tested 🗸
 document.getElementById('todo-items').insertAdjacentHTML(
   'beforeend',
   "<%= j render 'todo_items/todo_item', todo_item: @todo_item %>"
@@ -6,5 +5,5 @@ document.getElementById('todo-items').insertAdjacentHTML(
 
 document.getElementById('new_todo_item_content').value = '';
 
-jata.setViewState();
+Jata.setViewState();
 

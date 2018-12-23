@@ -71,4 +71,7 @@ guard :rspec, cmd: "bundle exec rspec" do
   # js.erb and global jata.js
   watch(%r{^app/assets/javascripts/jata\.js}) { "#{rspec.spec_dir}/system" }
   watch(%r{^app/views/(.+)/(.+)\.js\.erb})    { "#{rspec.spec_dir}/system" }
+
+  # View partials
+  watch(%r{^app/views/(.+)/_(.+)\.html\.haml}) { "#{rspec.spec_dir}/system" }
 end
