@@ -1,9 +1,12 @@
 if (isEditing() && isCancelingEdit()) {
-  cancelEdit();
+  // Tested 🗸
+  jata.setViewState();
 } else if (isEditing()) {
+  // Tested 🗸
   jata.setViewState();
   enableEditing();
 } else {
+  // Tested 🗸
   enableEditing();
 }
 
@@ -19,13 +22,7 @@ function editTodoItemForm() {
   return document.querySelector('textarea[name="todo_item[content]"]');
 }
 
-function cancelEdit() {
-  var editingTodoItem = editTodoItemForm().closest('.todo-item');
-  var editingTodoContent = editingTodoItem.querySelector('.todo-text');
-  editingTodoContent.style.display = 'block';
-  editingTodoItem.querySelector('.edit-form').remove();
-}
-
+// Tested 🗸
 function enableEditing() {
   var todoItem = document.getElementById('<%= @editing_todo.id %>');
   var todoRowLeft = todoItem.querySelector('.todo-row-left');

@@ -22,6 +22,7 @@
 
     = form_with model: [@todo_list, todo_item],
       method: :delete,
+      id: "destroy_todo_item_#{todo_item.id}",
       data: { confirm: "Are you sure?" } do |f|
       = f.button octicon("trashcan", :height => 16),
         class: "btn btn-sm btn-outline-danger rounded-circle",

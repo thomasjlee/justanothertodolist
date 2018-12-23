@@ -1,4 +1,5 @@
-= form_with model: [@todo_list, @todo_list.todo_items.new] do |f|
+= form_with model: [@todo_list, @todo_list.todo_items.new],
+  id: "new_todo_item_form" do |f|
   .input-group
     = f.text_field :content,
       autofocus:   true,
