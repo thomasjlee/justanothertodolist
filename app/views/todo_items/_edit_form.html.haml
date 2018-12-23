@@ -1,6 +1,6 @@
 = form_with model: todo_item,
   url: todo_list_todo_item_path(@todo_list, todo_item),
-  class: "edit-form w-100 px-1" do |f|
+  class: "edit-form w-100 px-1 pt-1" do |f|
   = f.text_area :content,
     rows: todo_item.textarea_rows,
     autofocus: true,
