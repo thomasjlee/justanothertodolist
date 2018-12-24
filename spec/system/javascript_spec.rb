@@ -1,51 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "JavaScripts", type: :system, js: true do
-  describe "TodoLists" do
-    context "When editing a todo list" do
-      before :each do
-        @todo_list = FactoryBot.create(:todo_list)
-        visit todo_list_path(@todo_list)
-        click_on "Edit"
-      end
-
-      it "replaces the todo list details with the edit todo list form" do
-        expect(page).to have_field "todo_list[title]"
-        expect(page).to have_field "todo_list[description]"
-        expect(page).to_not have_css "div#list-details"
-      end
-
-      it "does not change the current path" do
-        expect(page).to have_current_path todo_list_path(@todo_list)
-      end
-
-      it "autofocuses on the todo list title input" do
-        expect(page).to have_css "input.form-control:focus"
-      end
-    end
-
-    context "When updating a todo list" do
-      before :each do
-        @todo_list = FactoryBot.create(:todo_list)
-        visit todo_list_path(@todo_list)
-        click_on "Edit"
-        fill_in "todo_list[title]", with: "Updated title"
-        fill_in "todo_list[description]", with: "Updated description"
-        click_on "Save"
-      end
-
-      it "replaces the edit todo list form with todo list details" do
-        expect(page).to have_css "div#todo_list_details"
-        expect(page).to_not have_field "todo_list[title]"
-        expect(page).to_not have_field "todo_list[description]"
-      end
-
-      it "does not change the current path" do
-        expect(page).to have_current_path todo_list_path(@todo_list)
-      end
-    end
-  end
-
   describe "TodoItems" do
     context "When creating a todo item" do
       before :each do
@@ -162,7 +117,6 @@ RSpec.describe "JavaScripts", type: :system, js: true do
             find("button[type='submit']").click
           }
         }
-        page.driver.browser.switch_to.alert.accept
         expect(page).to_not have_text @todo_item_to_destroy.content
       end
 
@@ -176,7 +130,6 @@ RSpec.describe "JavaScripts", type: :system, js: true do
             find("button[type=submit]").click
           }
         }
-        page.driver.browser.switch_to.alert.accept
         expect(find(".clear-completed-btn")[:class]).to have_text "clear-completed-btn--disabled"
       end
     end

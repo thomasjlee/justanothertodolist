@@ -10,12 +10,17 @@
     %li.nav-item
       .small.text-secondary.py-2
         |
-    %li.nav-item
-      = form_with model: @todo_list,
-        method: :delete,
-        local: true,
-        data: { confirm: "Are you sure?" } do |f|
-        = f.submit "Delete",
-          class: "nav-link text-secondary p-2 small border-0 p-0 bg-transparent",
-          style: "cursor: pointer;"
+    - if @prompt_delete
+      %li.nav-item
+        = form_with model: @todo_list,
+          method: :delete,
+          local: true do |f|
+          = f.submit "Confirm Delete",
+            class: "nav-link text-danger p-2 small border-0 bg-transparent",
+            style: "cursor: pointer;"
+    - else
+      %li.nav-item
+        = link_to "Delete",
+          todo_list_path(@todo_list, prompt_delete: true),
+          class: "nav-link text-secondary p-2 small border-0 bg-transparent"
 

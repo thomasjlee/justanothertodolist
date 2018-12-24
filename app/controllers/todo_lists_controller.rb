@@ -7,6 +7,7 @@ class TodoListsController < ApplicationController
   end
 
   def show
+    @prompt_delete = params[:prompt_delete] == "true"
   end
 
   def new
