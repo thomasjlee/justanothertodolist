@@ -37,6 +37,7 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'webpacker', '~> 3.5'
 
 group :test do
   gem 'capybara', '~> 2.17.0'
