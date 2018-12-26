@@ -11,6 +11,7 @@
   .form-group.text-left.mb-3
     = f.label :description, class: "text-muted small pl-1 mb-2"
     = f.text_area :description,
+      data: stim_textarea,
       id: "edit_todo_list_description",
       class: "form-control form-control-sm bg-light border-0 shadow-none pl-1"
   .input-group.justify-content-center

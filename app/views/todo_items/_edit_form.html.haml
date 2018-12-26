@@ -1,9 +1,8 @@
 = form_with model: todo_item,
   url: todo_list_todo_item_path(@todo_list, todo_item),
-  data: {controller: "textarea"},
   class: "edit-form w-100 px-1 pt-1" do |f|
   = f.text_area :content,
-    data: {action: "textarea#resize input->textarea#resize", target: "textarea.textarea"},
+    data: stim_textarea,
     autofocus: true,
     id: "edit_todo_item_content_#{todo_item.id}",
     class: "form-control bg-light rounded-0 shadow-none px-1 py-0",
