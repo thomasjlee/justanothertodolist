@@ -1,12 +1,14 @@
+-# Add client-side validations
 = form_with model: todo_item,
   url: todo_list_todo_item_path(@todo_list, todo_item),
   class: "edit-form w-100 px-1 pt-1" do |f|
   = f.text_area :content,
     data: stim_textarea,
+    rows: 3,
     autofocus: true,
     id: "edit_todo_item_content_#{todo_item.id}",
     class: "form-control bg-light rounded-0 shadow-none px-1 py-0",
-    style: "overflow-y: hidden; border: none; overflow-wrap: break-word; word-break: break-all;"
+    style: "overflow-y: scroll; border: none; overflow-wrap: break-word; word-break: break-all;"
   = f.submit "Save",
     class: "form-control form-control-sm text-info mt-0 py-0 px-1 border-0 rounded-0 w-auto",
     style: "font-size: 80%; cursor: pointer;"

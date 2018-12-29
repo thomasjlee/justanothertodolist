@@ -27,6 +27,8 @@ function enableEditing() {
     'afterend',
     '<%= j render 'todo_items/edit_form', todo_item: @editing_todo %>'
   );
-  Jata.focus(todoItem.querySelector('textarea[name="todo_item[content]"]'));
+  var editForm = todoItem.querySelector('textarea[name="todo_item[content]"]');
+  editForm.style['overflow-y'] = 'hidden';
+  Jata.focus(editForm);
 }
 
