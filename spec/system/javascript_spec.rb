@@ -24,7 +24,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
       it "removes any edit todo item forms and displays all todo items" do
         find("a.edit-btn").click
         expect(page).to have_css "textarea#edit_todo_item_content_#{@todo_item.id}"
-        todo_item_content = find("p.todo-text", visible: false)
+        todo_item_content = find("div.todo-text", visible: false)
         expect(todo_item_content[:style]).to have_text "display: none;"
 
         within("form#new_todo_item_form") { find("button[type=submit]").click }
@@ -43,7 +43,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
 
       it "hides the corresponding todo item content" do
         find("a[href='#{edit_todo_list_todo_item_path(@todo_list, @todo_item)}']").click
-        todo_item = page.find("p#todo_item_content_#{@todo_item.id}", visible: false)
+        todo_item = page.find("div#todo_item_content_#{@todo_item.id}", visible: false)
         expect(todo_item[:style]).to have_text "display: none;"
       end
 
@@ -60,7 +60,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
       it "cancels the edit if the same edit button is clicked twice" do
         find("a[href='#{edit_todo_list_todo_item_path(@todo_list, @todo_item)}']").click
         find("a[href='#{edit_todo_list_todo_item_path(@todo_list, @todo_item)}']").click
-        todo_item = page.find("p#todo_item_content_#{@todo_item.id}", visible: false)
+        todo_item = page.find("div#todo_item_content_#{@todo_item.id}", visible: false)
         expect(todo_item[:style]).to_not have_text "display: none;"
         expect(page).to_not have_css "textarea#edit_todo_item_content_#{@todo_item.id}"
       end
@@ -68,8 +68,8 @@ RSpec.describe "JavaScripts", type: :system, js: true do
       it "when clicking on two different edit buttons, cancels the first and enables editing for the second" do
         find("a[href='#{edit_todo_list_todo_item_path(@todo_list, @todo_item)}']").click
         find("a[href='#{edit_todo_list_todo_item_path(@todo_list, @another_todo_item)}']").click
-        todo_item = page.find("p#todo_item_content_#{@todo_item.id}", visible: false)
-        another_todo_item = page.find("p#todo_item_content_#{@another_todo_item.id}", visible: false)
+        todo_item = page.find("div#todo_item_content_#{@todo_item.id}", visible: false)
+        another_todo_item = page.find("div#todo_item_content_#{@another_todo_item.id}", visible: false)
 
         expect(todo_item[:style]).to have_text "display: block;"
         expect(page).to_not have_css "textarea#edit_todo_item_content_#{@todo_item.id}"
@@ -96,7 +96,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
 
       it "displays all todo item content and hides edit forms" do
         expect(page).to_not have_css "form.edit-form"
-        expect(find("p.todo-text")[:style]).to have_text "display: block"
+        expect(find("div.todo-text")[:style]).to have_text "display: block"
       end
     end
 

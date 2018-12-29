@@ -1,7 +1,8 @@
-var todo_item_content = document.getElementById("todo_item_content_<%= @todo_item.id %>");
-var updated_todo_item_content = document.getElementById("edit_todo_item_content_<%= @todo_item.id %>").value;
+var todoItemContent = document.getElementById("todo_item_content_<%= @todo_item.id %>");
 
-todo_item_content.textContent = updated_todo_item_content;
+todoItemContent.querySelector("p").remove()
+todoItemContent.insertAdjacentHTML("afterbegin", "<%= j simple_format @todo_item.content %>")
+todoItemContent.querySelector("p").className = "m-0"
 
 Jata.setViewState();
 

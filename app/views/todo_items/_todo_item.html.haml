@@ -7,9 +7,10 @@
         value: !todo_item.completed,
         class: "btn btn-sm rounded-circle #{todo_item.completed? ? 'btn-completed btn-info' : 'btn-not-completed btn-outline-info'}"
 
-    %p.todo-text.m-0.pt-1{class: [("completed" if todo_item.completed?), ("px-2" unless todo_item == @editing_todo)], id: "todo_item_content_#{todo_item.id}"}
-      -# Use simple_format to preserve line breaks
-      = todo_item.content unless todo_item == @editing_todo
+    .todo-text.pt-1{class: [("completed" if todo_item.completed?), ("px-2" unless todo_item == @editing_todo)],
+      id: "todo_item_content_#{todo_item.id}"}
+      = simple_format (todo_item.content unless todo_item == @editing_todo),
+        class: "m-0"
 
   - if todo_item == @editing_todo
     = render 'todo_items/edit_form',
