@@ -1,9 +1,10 @@
-Jata.setViewState();
+(function() {
+  Jata.setViewState();
 
-var todoItems = document.getElementById('todo-items');
-var todoItem  = document.getElementById("<%= @todo_item.id %>");
+  var todoItems = document.getElementById('todo-items');
+  var todoItem  = document.getElementById("<%= @todo_item.id %>");
 
-todoItem.parentNode.removeChild(todoItem);
+  todoItem.parentNode.removeChild(todoItem);
 
-Jata.toggleClearCompletedButton(<%= any_completed?(@todo_list.todo_items) %>);
-
+  Jata.toggleClearCompletedButton(<%= any_completed?(@todo_list.todo_items) %>);
+}())

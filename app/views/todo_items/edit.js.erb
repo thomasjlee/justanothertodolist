@@ -1,34 +1,35 @@
-if (isEditing() && isCancelingEdit()) {
-  Jata.setViewState();
-} else if (isEditing()) {
-  Jata.setViewState();
-  enableEditing();
-} else {
-  enableEditing();
-}
+(function() {
+  if (isEditing() && isCancelingEdit()) {
+    Jata.setViewState();
+  } else if (isEditing()) {
+    Jata.setViewState();
+    enableEditing();
+  } else {
+    enableEditing();
+  }
 
-function isEditing() {
-  return Boolean(editTodoItemForm());
-}
+  function isEditing() {
+    return Boolean(editTodoItemForm());
+  }
 
-function isCancelingEdit() {
-  return "<%= @editing_todo.id %>" === editTodoItemForm().closest('.todo-item').id;
-}
+  function isCancelingEdit() {
+    return "<%= @editing_todo.id %>" === editTodoItemForm().closest('.todo-item').id;
+  }
 
-function editTodoItemForm() {
-  return document.querySelector('textarea[name="todo_item[content]"]');
-}
+  function editTodoItemForm() {
+    return document.querySelector('textarea[name="todo_item[content]"]');
+  }
 
-function enableEditing() {
-  var todoItem = document.getElementById('<%= @editing_todo.id %>');
-  var todoRowLeft = todoItem.querySelector('.todo-row-left');
-  todoItem.querySelector('.todo-text').style.display = 'none';
-  todoRowLeft.insertAdjacentHTML(
-    'afterend',
-    '<%= j render 'todo_items/edit_form', todo_item: @editing_todo %>'
-  );
-  var editForm = todoItem.querySelector('textarea[name="todo_item[content]"]');
-  editForm.style['overflow-y'] = 'hidden';
-  Jata.focus(editForm);
-}
-
+  function enableEditing() {
+    var todoItem = document.getElementById('<%= @editing_todo.id %>');
+    var todoRowLeft = todoItem.querySelector('.todo-row-left');
+    todoItem.querySelector('.todo-text').style.display = 'none';
+    todoRowLeft.insertAdjacentHTML(
+      'afterend',
+      '<%= j render 'todo_items/edit_form', todo_item: @editing_todo %>'
+    );
+    var editForm = todoItem.querySelector('textarea[name="todo_item[content]"]');
+    editForm.style['overflow-y'] = 'hidden';
+    Jata.focus(editForm);
+  }
+}())

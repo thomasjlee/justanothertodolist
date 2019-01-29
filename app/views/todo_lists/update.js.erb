@@ -1,6 +1,7 @@
-var editForm = document.getElementById('edit_todo_list_form');
-var todoListDetails = "<%= j render 'todo_list_details' %>";
+(function() {
+  var editForm = document.getElementById('edit_todo_list_form');
+  var todoListDetails = "<%= j render 'todo_list_details' %>";
 
-editForm.insertAdjacentHTML('afterend', todoListDetails);
-editForm.remove();
-
+  editForm.insertAdjacentHTML('afterend', todoListDetails);
+  editForm.remove();
+}())

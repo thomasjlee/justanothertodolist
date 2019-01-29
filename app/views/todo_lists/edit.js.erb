@@ -1,8 +1,9 @@
-var todoListDetails = document.getElementById('todo_list_details');
-var editForm = "<%= j render 'edit_form' %>";
+(function() {
+  var todoListDetails = document.getElementById('todo_list_details');
+  var editForm = "<%= j render 'edit_form' %>";
 
-todoListDetails.insertAdjacentHTML('afterend', editForm);
-todoListDetails.remove();
+  todoListDetails.insertAdjacentHTML('afterend', editForm);
+  todoListDetails.remove();
 
-Jata.focus(document.getElementById('edit_todo_list_title'));
-
+  Jata.focus(document.getElementById('edit_todo_list_title'));
+}())
