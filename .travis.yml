@@ -1,3 +1,6 @@
+env:
+  global:
+    CC_TEST_REPORTER_ID: 43c5c870fa96f775d60bab8bbb63b94b4989c8b7e39ee305e007aa5a01a46625
 dist: trusty
 addons:
   chrome: stable
@@ -9,8 +12,13 @@ before_script:
 - bundle exec rails db:create
 - bundle exec rails db:migrate
 - bundle exec rails assets:precompile
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- ./cc-test-reporter before-build
 script:
 - bundle exec rspec
+after_script:
+- ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 deploy:
   provider: heroku
   api_key:
