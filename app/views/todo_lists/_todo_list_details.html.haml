@@ -3,9 +3,14 @@
   %p.mb-2.text-dark= @todo_list.description
   %ul.nav.justify-content-center
     %li.nav-item
-      = link_to "Edit",
-        { edit: true },
-        class: "nav-link text-secondary px-2 small"
+      - if params[:prompt_delete] == "true"
+        = link_to "Cancel",
+          @todo_list,
+          class: "nav-link text-secondary px-2 small"
+      - else
+        = link_to "Edit",
+          { edit: true },
+          class: "nav-link text-secondary px-2 small"
     %li.nav-item
       .small.text-secondary.py-2
         |

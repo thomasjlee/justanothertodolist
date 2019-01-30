@@ -111,6 +111,15 @@ RSpec.describe "TodoList System", type: :system do
       expect(page).to have_css "input[value='Confirm Delete']"
     end
 
+    it "can be cancelled" do
+      todo_list = FactoryBot.create(:todo_list)
+      visit todo_list_path(todo_list)
+      click_on "Delete"
+      click_on "Cancel"
+      expect(page).to have_current_path todo_list_path(todo_list)
+      expect(page).to_not have_css "input[value='Confirm Delete']"
+    end
+
     it "deletes the todo list upon confirmation" do
       todo_list = FactoryBot.create(:todo_list)
       visit todo_list_path(todo_list)
