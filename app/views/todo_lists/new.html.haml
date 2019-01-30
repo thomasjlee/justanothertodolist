@@ -1,2 +1,28 @@
-= render 'new_form'
+.row.text-center
+  .col-md-8.ml-auto.mr-auto
+    .card.mb-3.border-0.rounded-0
+      .card-body
+        = form_with model: @todo_list,
+          local: true do |f|
+          .form-group.text-left.mb-0
+            = f.label :title, class: "text-muted small pl-1 md-0"
+            = f.text_field :title,
+              autofocus: true,
+              id: :title,
+              class: "form-control form-control-lg bg-light text-info border-0 shadow-none py-0 pl-1"
+          .form-group.text-left.mb-3
+            = f.label :description, class: "text-muted small pl-1 mb-2"
+            = f.text_area :description,
+              data: stim_textarea,
+              id: :description,
+              class: "form-control form-control-sm bg-light border-0 shadow-none pl-1"
+          .input-group.justify-content-center
+            = f.submit "Save",
+              class: "text-info small border-0 p-0 bg-transparent",
+              style: "cursor: pointer;"
+            .small.text-secondary.px-2
+              |
+            = link_to "Cancel",
+              todo_lists_path,
+              class: "text-secondary small"
 
