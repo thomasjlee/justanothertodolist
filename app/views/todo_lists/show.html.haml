@@ -2,10 +2,10 @@
   .col-sm-8.ml-auto.mr-auto
     .card.mb-4.border-0.rounded-0
       .card-body.text-center.p-3
-        - if @editing_list
-          = render 'edit_form'
+        - if params[:edit] == "true"
+          = render "edit_form"
         - else
-          = render 'todo_lists/todo_list_details'
+          = render "todo_lists/todo_list_details"
       %ul.list-group.list-group-flush#todo-items
         - @todo_list_items.each do |item|
           = render "todo_items/todo_item", todo_item: item

@@ -1,13 +1,12 @@
 class TodoListsController < ApplicationController
-  before_action :set_todo_list, only: [:show, :edit, :update, :destroy]
-  before_action :set_ordered_items, only: [:show, :edit]
+  before_action :set_todo_list, only: [:show, :update, :destroy]
+  before_action :set_ordered_items, only: [:show]
 
   def index
     @todo_lists = TodoList.all
   end
 
   def show
-    @prompt_delete = params[:prompt_delete] == "true"
   end
 
   def new
@@ -25,22 +24,11 @@ class TodoListsController < ApplicationController
     end
   end
 
-  def edit
-    @editing_list = true
-    respond_to do |format|
-      format.html { render :show }
-      format.js
-    end
-  end
-
   def update
-    respond_to do |format|
-      if @todo_list.update_attributes(todo_list_params)
-        format.html { redirect_to @todo_list }
-        format.js
-      else
-        render :edit
-      end
+    if @todo_list.update_attributes(todo_list_params)
+      redirect_to @todo_list
+    else
+      render :show
     end
   end
 

@@ -34,8 +34,8 @@ RSpec.describe "TodoList System", type: :system do
         expect(page).to_not have_css "div#todo_list_details"
       end
 
-      it "does not change the current path" do
-        expect(page).to have_current_path todo_list_path(@todo_list)
+      it "adds edit=true to query params" do
+        expect(page).to have_current_path todo_list_path(@todo_list) + "?edit=true"
       end
 
       it "autofocuses on the todo list title input" do
@@ -44,8 +44,8 @@ RSpec.describe "TodoList System", type: :system do
     end
 
     context "with Javascript disabled" do
-      it "navigates to the edit todo list route" do
-        expect(page).to have_current_path "/todo_lists/#{@todo_list.id}/edit"
+      it "adds edit=true to query params" do
+        expect(page).to have_current_path "/todo_lists/#{@todo_list.id}?edit=true"
         expect(page).to have_field "todo_list[title]"
         expect(page).to have_field "todo_list[description]"
         expect(page).to_not have_css "div#todo_list_details"
@@ -70,7 +70,7 @@ RSpec.describe "TodoList System", type: :system do
         expect(page).to have_css "div#todo_list_details"
       end
 
-      it "stays on the todo list path" do
+      it "removes edit=true from query params" do
         expect(page).to have_current_path todo_list_path(@todo_list)
       end
 

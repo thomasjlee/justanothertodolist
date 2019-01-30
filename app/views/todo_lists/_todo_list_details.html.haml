@@ -4,13 +4,12 @@
   %ul.nav.justify-content-center
     %li.nav-item
       = link_to "Edit",
-        @editing_list ? todo_list_path(@todo_list): edit_todo_list_path(@todo_list),
-        remote: true,
+        { edit: true },
         class: "nav-link text-secondary px-2 small"
     %li.nav-item
       .small.text-secondary.py-2
         |
-    - if @prompt_delete
+    - if params[:prompt_delete] == "true"
       %li.nav-item
         = form_with model: @todo_list,
           method: :delete,
@@ -21,6 +20,6 @@
     - else
       %li.nav-item
         = link_to "Delete",
-          todo_list_path(@todo_list, prompt_delete: true),
+          { prompt_delete: true },
           class: "nav-link text-secondary p-2 small border-0 bg-transparent"
 
