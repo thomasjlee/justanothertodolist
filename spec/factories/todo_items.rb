@@ -4,4 +4,3 @@ FactoryBot.define do
     todo_list
   end
 end
-

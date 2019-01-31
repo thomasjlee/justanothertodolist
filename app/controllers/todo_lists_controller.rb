@@ -40,15 +40,15 @@ class TodoListsController < ApplicationController
 
   private
 
-    def set_todo_list
-      @todo_list = TodoList.find(params[:id])
-    end
+  def set_todo_list
+    @todo_list = TodoList.find(params[:id])
+  end
 
-    def set_ordered_items
-      @todo_list_items = @todo_list.todo_items.order(created_at: :asc)
-    end
+  def set_ordered_items
+    @todo_list_items = @todo_list.todo_items.order(created_at: :asc)
+  end
 
-    def todo_list_params
-      params.require(:todo_list).permit(:title, :description)
-    end
+  def todo_list_params
+    params.require(:todo_list).permit(:title, :description)
+  end
 end

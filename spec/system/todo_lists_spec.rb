@@ -128,4 +128,3 @@ RSpec.describe "TodoList System", type: :system do
     end
   end
 end
-

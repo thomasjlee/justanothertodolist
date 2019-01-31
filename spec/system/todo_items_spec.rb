@@ -38,16 +38,18 @@ RSpec.describe "TodoItems", type: :system do
 
   describe "when editing a todo item" do
     it "edits a todo item" do
-      todo_item      = FactoryBot.create(:todo_item)
-      todo_path      = todo_list_todo_item_path(todo_item.todo_list, todo_item)
+      todo_item = FactoryBot.create(:todo_item)
+      todo_path = todo_list_todo_item_path(todo_item.todo_list, todo_item)
       edit_todo_path = edit_todo_list_todo_item_path(todo_item.todo_list, todo_item)
 
       visit todo_list_path(todo_item.todo_list)
       find("a[href='#{edit_todo_path}']").click
       expect(page).to have_css "form[action='#{todo_path}']"
 
-      within('form.edit-form') { fill_in "todo_item[content]",
-                                 with: "Edited todo item" }
+      within("form.edit-form") {
+        fill_in "todo_item[content]",
+                with: "Edited todo item"
+      }
       click_on "Save"
       expect(todo_item.reload.content).to eq "Edited todo item"
     end
@@ -57,8 +59,8 @@ RSpec.describe "TodoItems", type: :system do
         @todo_item = FactoryBot.create(:todo_item)
         @item_path = todo_list_todo_item_path(@todo_item.todo_list, @todo_item)
         @edit_item_path = edit_todo_list_todo_item_path(@todo_item.todo_list, @todo_item)
-        @edit_link_css  = "a[href='#{@edit_item_path}']"
-        @edit_form_css  = "form[action='#{@item_path}'] textarea[name='todo_item[content]']"
+        @edit_link_css = "a[href='#{@edit_item_path}']"
+        @edit_form_css = "form[action='#{@item_path}'] textarea[name='todo_item[content]']"
       end
 
       it "shows the edit todo form" do

@@ -28,7 +28,7 @@ class TodoItemsController < ApplicationController
       if @todo_item.update_attributes(todo_item_params)
         format.html { redirect_to @todo_list }
         format.js do
-          render "update"   if params[:todo_item][:content]
+          render "update" if params[:todo_item][:content]
           render "complete" if params[:todo_item][:completed]
         end
       else
@@ -55,15 +55,15 @@ class TodoItemsController < ApplicationController
 
   private
 
-    def set_todo_list
-      @todo_list = TodoList.find(params[:todo_list_id])
-    end
+  def set_todo_list
+    @todo_list = TodoList.find(params[:todo_list_id])
+  end
 
-    def set_todo_item
-      @todo_item = @todo_list.todo_items.find(params[:id])
-    end
+  def set_todo_item
+    @todo_item = @todo_list.todo_items.find(params[:id])
+  end
 
-    def todo_item_params
-      params.require(:todo_item).permit(:content, :completed)
-    end
+  def todo_item_params
+    params.require(:todo_item).permit(:content, :completed)
+  end
 end

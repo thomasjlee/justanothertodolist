@@ -18,7 +18,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
       it "clears the new todo item input" do
         within("form#new_todo_item_form") { find("button[type=submit]").click }
         input_value = find("input[name='todo_item[content]']").value
-        expect(input_value).to eq ''
+        expect(input_value).to eq ""
       end
 
       it "removes any edit todo item forms and displays all todo items" do
@@ -73,7 +73,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
 
         expect(todo_item[:style]).to have_text "display: block;"
         expect(page).to_not have_css "textarea#edit_todo_item_content_#{@todo_item.id}"
-        
+
         expect(another_todo_item[:style]).to have_text "display: none;"
         expect(page).to have_css "textarea#edit_todo_item_content_#{@another_todo_item.id}"
       end
@@ -175,9 +175,9 @@ RSpec.describe "JavaScripts", type: :system, js: true do
       before :each do
         @todo_list = FactoryBot.create(:todo_list)
         @todo_item_one = FactoryBot.create(:todo_item, todo_list: @todo_list,
-                                          content: "Steam the milk", completed: true)
+                                                       content: "Steam the milk", completed: true)
         @todo_item_two = FactoryBot.create(:todo_item, todo_list: @todo_list,
-                                          content: "Grind the beans", completed: true)
+                                                       content: "Grind the beans", completed: true)
         visit todo_list_path(@todo_list)
         click_on "Clear Completed"
       end
