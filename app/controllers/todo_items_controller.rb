@@ -4,13 +4,14 @@ class TodoItemsController < ApplicationController
 
   def create
     @todo_item = @todo_list.todo_items.build(todo_item_params)
-    respond_to do |format|
-      if @todo_item.save
-        format.js
-        format.html { redirect_to @todo_list }
+    if @todo_item.save
+      if params[:js_enabled] == "true"
+        render @todo_item
       else
-        format.html { redirect_to @todo_list }
+        redirect_to @todo_list
       end
+    else
+      # handle error case
     end
   end
 

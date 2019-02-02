@@ -24,12 +24,11 @@ RSpec.describe "JavaScripts", type: :system, js: true do
       it "removes any edit todo item forms and displays all todo items" do
         find("a.edit-btn").click
         expect(page).to have_css "textarea#edit_todo_item_content_#{@todo_item.id}"
-        todo_item_content = find("div.todo-text", visible: false)
-        expect(todo_item_content[:style]).to have_text "display: none;"
+        expect(page).to have_css "div.todo-text.hidden", visible: false
 
         within("form#new_todo_item_form") { find("button[type=submit]").click }
         expect(page).to_not have_css "textarea#edit_todo_item_content_#{@todo_item.id}"
-        expect(todo_item_content[:style]).to have_text "display: block;"
+        expect(page).to_not have_css "div.todo-text.hidden"
       end
     end
 
@@ -44,7 +43,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
       it "hides the corresponding todo item content" do
         find("a[href='#{edit_todo_list_todo_item_path(@todo_list, @todo_item)}']").click
         todo_item = page.find("div#todo_item_content_#{@todo_item.id}", visible: false)
-        expect(todo_item[:style]).to have_text "display: none;"
+        expect(todo_item[:class]).to have_text "hidden"
       end
 
       it "shows the form for the corresponding todo item" do
@@ -71,10 +70,10 @@ RSpec.describe "JavaScripts", type: :system, js: true do
         todo_item = page.find("div#todo_item_content_#{@todo_item.id}", visible: false)
         another_todo_item = page.find("div#todo_item_content_#{@another_todo_item.id}", visible: false)
 
-        expect(todo_item[:style]).to have_text "display: block;"
+        expect(todo_item[:class]).to_not have_text "hidden"
         expect(page).to_not have_css "textarea#edit_todo_item_content_#{@todo_item.id}"
 
-        expect(another_todo_item[:style]).to have_text "display: none;"
+        expect(another_todo_item[:class]).to have_text "hidden"
         expect(page).to have_css "textarea#edit_todo_item_content_#{@another_todo_item.id}"
       end
     end
@@ -96,7 +95,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
 
       it "displays all todo item content and hides edit forms" do
         expect(page).to_not have_css "form.edit-form"
-        expect(find("div.todo-text")[:style]).to have_text "display: block"
+        expect(find("div.todo-text")[:class]).to_not have_text "hidden"
       end
     end
 

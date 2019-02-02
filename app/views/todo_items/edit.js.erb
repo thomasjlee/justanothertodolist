@@ -23,7 +23,7 @@
   function enableEditing() {
     var todoItem = document.getElementById('<%= @editing_todo.id %>');
     var todoRowLeft = todoItem.querySelector('.todo-row-left');
-    todoItem.querySelector('.todo-text').style.display = 'none';
+    todoItem.querySelector('.todo-text').classList.add('hidden')
     todoRowLeft.insertAdjacentHTML(
       'afterend',
       '<%= j render 'todo_items/edit_form', todo_item: @editing_todo %>'

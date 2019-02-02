@@ -24,8 +24,8 @@ document.addEventListener('turbolinks:load', function() {
   };
 
   Jata.prototype._displayTodoContents = function() {
-    for (let todoText of document.querySelectorAll('.todo-text')) {
-      todoText.style.display = 'block';
+    for (let todoText of document.querySelectorAll('.todo-text.hidden')) {
+      todoText.classList.remove('hidden');
     }
   };
 
