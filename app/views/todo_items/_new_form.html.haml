@@ -1,6 +1,6 @@
 = form_with model: [@todo_list, @todo_list.todo_items.new],
   id: "new_todo_item_form",
-  data: { target: "forms.form", action: "todo-lists#onSubmit ajax:success->todo-lists#onCreate" } do |f|
+  data: { target: "stimulus.form", action: "todo-lists#onCreate ajax:success->todo-lists#onCreateSuccess" } do |f|
   .input-group
     = f.text_field :content,
       autofocus:   true,

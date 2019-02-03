@@ -5,7 +5,7 @@ class TodoItemsController < ApplicationController
   def create
     @todo_item = @todo_list.todo_items.build(todo_item_params)
     if @todo_item.save
-      if params[:js_enabled] == "true"
+      if params[:js] == "true"
         render @todo_item
       else
         redirect_to @todo_list
@@ -40,10 +40,7 @@ class TodoItemsController < ApplicationController
 
   def destroy
     @todo_item.destroy
-    respond_to do |format|
-      format.html { redirect_to @todo_list }
-      format.js
-    end
+    redirect_to @todo_list unless params[:js] == "true"
   end
 
   def clear_completed

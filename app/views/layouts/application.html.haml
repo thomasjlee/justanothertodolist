@@ -10,7 +10,7 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
   %body.bg-light
-    -# forms_controller prepares forms to be handled by stimulus
-    .container.mt-3.mb-4{ data: { controller: "forms" } }
+    -# stimulus_controller prepares forms to be handled by stimulus
+    .container.mt-3.mb-4{ data: { controller: "stimulus" } }
       = yield
 
