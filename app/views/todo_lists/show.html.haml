@@ -25,6 +25,7 @@
           disabled: !any_completed?(@todo_list_items),
           remote: true,
           method: :delete,
+          form: { "data-target": "stimulus.form", "data-action": "ajax:success->todo-lists#onClearCompletedSuccess" },
           form_class: "mr-2",
           id: "clear_completed_button",
           class: "clear-completed-btn #{ any_completed?(@todo_list_items) ? 'clear-completed-btn--enabled' : 'clear-completed-btn--disabled' }"
