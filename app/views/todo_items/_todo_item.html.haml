@@ -1,8 +1,9 @@
-%li.todo-item.list-group-item.d-flex.justify-content-between{id: [todo_item.id]}
+%li.todo-item.list-group-item.d-flex.justify-content-between{id: [todo_item.id], data: {completed: "#{todo_item.completed}"}}
   .todo-row-left.d-flex
     = form_with model: [@todo_list, todo_item],
       method: :patch,
-      data: { "todo-id": todo_item.id } do |f|
+      url: complete_todo_list_todo_item_path(@todo_list, todo_item),
+      data: { "todo-id": todo_item.id, target: "stimulus.form", action: "ajax:success->todo-lists#onToggleCompleteSuccess" } do |f|
       = f.button octicon("check", height: 16),
         name: "todo_item[completed]",
         value: !todo_item.completed,

@@ -11,7 +11,7 @@ class TodoItemsController < ApplicationController
         redirect_to @todo_list
       end
     else
-      # handle error case
+      # TODO: handle error case
     end
   end
 
@@ -29,11 +29,10 @@ class TodoItemsController < ApplicationController
       if @todo_item.update_attributes(todo_item_params)
         format.html { redirect_to @todo_list }
         format.js do
-          render "update" if params[:todo_item][:content]
-          render "complete" if params[:todo_item][:completed]
+          render "update"
         end
       else
-        redirect_back(fallback_location: root_path)
+        # TODO: handle error case
       end
     end
   end
@@ -41,6 +40,14 @@ class TodoItemsController < ApplicationController
   def destroy
     @todo_item.destroy
     redirect_to @todo_list unless params[:js] == "true"
+  end
+
+  def complete
+    if @todo_item.update_attributes(todo_item_params)
+      redirect_to @todo_list unless params[:js] == "true"
+    else
+      # TODO: handle error case
+    end
   end
 
   def clear_completed

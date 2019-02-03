@@ -13,6 +13,27 @@ export default class extends Controller {
     this.newTodoInputTarget.value = ""
   }
 
+  // TODO: refactor - this method is doing quite a lot
+  onToggleCompleteSuccess(event) {
+    this.setViewState()
+
+    const todoId = event.currentTarget.dataset.todoId
+    const todoLi = document.getElementById(todoId)
+    const completeButton = event.currentTarget.querySelector("button[name='todo_item[completed]']")
+
+    todoLi.querySelector(".todo-text").classList.toggle("completed")
+    todoLi.dataset.completed = todoLi.dataset.completed === "true" ? "false" : "true"
+
+    completeButton.value = completeButton.value === "true" ? "false" : "true"
+    completeButton.classList.toggle("btn-info")
+    completeButton.classList.toggle("btn-completed")
+    completeButton.classList.toggle("btn-outline-info")
+    completeButton.classList.toggle("btn-not-completed")
+    completeButton.blur()
+
+    this.completedTodos.length ? this.enableClearCompletedButton() : this.disableClearCompletedButton()
+  }
+
   onClearCompletedSuccess() {
     this.completedTodos.forEach(todo => todo.remove())
     this.disableClearCompletedButton()
@@ -21,19 +42,13 @@ export default class extends Controller {
   onDestroy(event) {
     const todoId = event.currentTarget.dataset.todoId
     document.getElementById(todoId).remove()
-    if (!this.anyCompleted) {
+    if (!this.completedTodos.length) {
       this.disableClearCompletedButton()
     }
   }
 
   get completedTodos() {
-    return [...document.querySelectorAll("button[name='todo_item[completed]'][value='false']")]
-      .map(button => button.parentElement.dataset.todoId)
-      .map(id => document.getElementById(id))
-  }
-
-  get anyCompleted() {
-    return Boolean(document.querySelectorAll("button[name='todo_item[completed]'][value='false']").length)
+    return document.querySelectorAll("[data-completed=true]")
   }
 
   get clearCompletedButton() {

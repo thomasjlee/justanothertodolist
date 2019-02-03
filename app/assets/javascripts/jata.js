@@ -2,7 +2,7 @@ document.addEventListener('turbolinks:load', function() {
   window.Jata = new Jata();
 
   function Jata() {
-    this.clearCompletedButton = document.getElementById("clear_completed_button");
+    // this.clearCompletedButton = document.getElementById("clear_completed_button");
   }
 
   Jata.prototype.focus = function(domElement) {
@@ -17,12 +17,6 @@ document.addEventListener('turbolinks:load', function() {
     this._removeEditForms();
   };
 
-  Jata.prototype.toggleClearCompletedButton = function(anyCompletedTodoItems) {
-    this.clearCompletedButton && anyCompletedTodoItems
-      ? this._enableClearCompletedButton()
-      : this._disableClearCompletedButton();
-  };
-
   Jata.prototype._displayTodoContents = function() {
     for (let todoText of document.querySelectorAll('.todo-text.hidden')) {
       todoText.classList.remove('hidden');
@@ -33,18 +27,6 @@ document.addEventListener('turbolinks:load', function() {
     for (let editForm of document.getElementsByClassName('edit-form')) {
       editForm.remove();
     }
-  };
-
-  Jata.prototype._enableClearCompletedButton = function() {
-    this.clearCompletedButton.removeAttribute('disabled');
-    this.clearCompletedButton.classList.add('clear-completed-btn--enabled');
-    this.clearCompletedButton.classList.remove('clear-completed-btn--disabled');
-  };
-
-  Jata.prototype._disableClearCompletedButton = function() {
-    this.clearCompletedButton.setAttribute('disabled', true);
-    this.clearCompletedButton.classList.add('clear-completed-btn--disabled');
-    this.clearCompletedButton.classList.remove('clear-completed-btn--enabled');
   };
 });
 

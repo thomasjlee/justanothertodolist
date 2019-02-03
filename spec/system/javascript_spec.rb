@@ -123,6 +123,8 @@ RSpec.describe "JavaScripts", type: :system, js: true do
         destroy_todo_item_path = todo_list_todo_item_path(@todo_list, @todo_item_to_destroy)
         todo_li = find_by_id(@todo_item_to_destroy.id)
         within(todo_li) { find("button[name='todo_item[completed]']").click }
+        # FIXME
+        sleep(0.05)
         expect(find(".clear-completed-btn")[:class]).to have_text "clear-completed-btn--enabled"
         within(todo_li) {
           within(page.find_by_id("destroy_todo_item_#{@todo_item_to_destroy.id}")) {
