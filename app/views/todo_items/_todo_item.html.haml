@@ -9,20 +9,20 @@
         value: !todo_item.completed,
         class: "btn btn-sm rounded-circle #{todo_item.completed? ? 'btn-completed btn-info' : 'btn-not-completed btn-outline-info'}"
 
-    .todo-text.pt-1{class: [("completed" if todo_item.completed?), ("px-2" unless todo_item == @editing_todo)],
+    .todo-text.pt-1{class: [("completed" if todo_item.completed?), ("px-2" unless is_editing_todo?(todo_item))],
       id: "todo_item_content_#{todo_item.id}"}
-      = simple_format (todo_item.content unless todo_item == @editing_todo),
+      = simple_format (todo_item.content unless is_editing_todo?(todo_item)),
         class: "m-0"
 
-  - if todo_item == @editing_todo
-    = render 'todo_items/edit_form',
-      { todo_item: todo_item, editing_todo: @editing_todo }
+  = render 'todo_items/edit_form',
+    { todo_item: todo_item }
 
   .todo-row-right.d-flex.justify-content-end.align-items-start
     = link_to octicon("pencil", height: 16),
-      todo_item == @editing_todo ? todo_list_path(@todo_list) : edit_todo_list_todo_item_path(@todo_list, todo_item.id), 
+      is_editing_todo?(todo_item) ? todo_list_path(@todo_list) : edit_todo_list_todo_item_path(@todo_list, todo_item.id),
       class: "edit-btn btn btn-sm btn-outline-warning rounded-circle mr-1",
-      remote: true
+      local: true,
+      data: { action: "todo-lists#onEditButtonClick", "todo-id": todo_item.id, tmp: todo_item.id }
 
     = form_with model: [@todo_list, todo_item],
       method: :delete,

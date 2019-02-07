@@ -7,7 +7,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
         @todo_list = FactoryBot.create(:todo_list)
         @todo_item = FactoryBot.create(:todo_item, todo_list: @todo_list)
         visit todo_list_path(@todo_list)
-        fill_in "todo_item[content]", with: "Grind the coffee beans"
+        fill_in "new_todo_item_content", with: "Grind the coffee beans"
       end
 
       it "adds the new todo item to the DOM" do

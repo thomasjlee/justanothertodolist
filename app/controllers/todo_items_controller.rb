@@ -17,23 +17,18 @@ class TodoItemsController < ApplicationController
 
   def edit
     @todo_list_items = @todo_list.todo_items.order(created_at: :asc)
-    @editing_todo = TodoItem.find(params[:id])
-    respond_to do |format|
-      format.html { render "todo_lists/show" }
-      format.js
-    end
+    render "todo_lists/show"
   end
 
   def update
-    respond_to do |format|
-      if @todo_item.update_attributes(todo_item_params)
-        format.html { redirect_to @todo_list }
-        format.js do
-          render "update"
-        end
+    if @todo_item.update_attributes(todo_item_params)
+      if params[:js] == "true"
+        render plain: @todo_item.content
       else
-        # TODO: handle error case
+        redirect_to @todo_list
       end
+    else
+      # TODO: handle error case
     end
   end
 

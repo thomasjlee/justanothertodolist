@@ -1,9 +1,0 @@
-(function() {
-  var todoItemContent = document.getElementById("todo_item_content_<%= @todo_item.id %>");
-
-  todoItemContent.querySelector("p").remove()
-  todoItemContent.insertAdjacentHTML("afterbegin", "<%= j simple_format @todo_item.content %>")
-  todoItemContent.querySelector("p").className = "m-0"
-
-  Jata.setViewState();
-}())

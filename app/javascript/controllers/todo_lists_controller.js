@@ -34,6 +34,43 @@ export default class extends Controller {
     this.completedTodos.length ? this.enableClearCompletedButton() : this.disableClearCompletedButton()
   }
 
+  // TODO: refactor
+  onEditButtonClick(event) {
+    event.preventDefault()
+    const todoId = event.currentTarget.dataset.todoId
+    const todoLi = document.getElementById(todoId)
+    const editForm = todoLi.querySelector("form.edit-form")
+
+    if (this.isEditing() && this.isCancelingEdit(todoId)) {
+      this.setViewState()
+    } else if (this.isEditing()) {
+      this.setViewState()
+      editForm.classList.remove("hidden")
+      editForm.querySelector("textarea").style["overflow-y"] = "hidden"
+      todoLi.querySelector(".todo-text").classList.add("hidden")
+      const textarea = editForm.querySelector("textarea")
+      const textareasController = this.application.getControllerForElementAndIdentifier(textarea, "textarea") // will be "textareas"
+      textareasController.resize()
+      this.focus(editForm.querySelector("textarea"))
+    } else {
+      editForm.classList.remove("hidden")
+      editForm.querySelector("textarea").style["overflow-y"] = "hidden"
+      todoLi.querySelector(".todo-text").classList.add("hidden")
+      const textarea = editForm.querySelector("textarea")
+      const textareasController = this.application.getControllerForElementAndIdentifier(textarea, "textarea") // will be "textareas"
+      textareasController.resize()
+      this.focus(editForm.querySelector("textarea"))
+    }
+  }
+
+  onUpdateSuccess(event) {
+    const [data, status, xhr] = event.detail
+    const todoLi = event.currentTarget.parentElement
+    const todoP = todoLi.querySelector(".todo-text p")
+    todoP.textContent = xhr.response
+    this.setViewState()
+  }
+
   onClearCompletedSuccess() {
     this.completedTodos.forEach(todo => todo.remove())
     this.disableClearCompletedButton()
@@ -47,12 +84,24 @@ export default class extends Controller {
     }
   }
 
+  isEditing() {
+    return Boolean(this.editTodoForm)
+  }
+
+  isCancelingEdit(editingTodoId) {
+    return this.editTodoForm.dataset.todoId === editingTodoId
+  }
+
   get completedTodos() {
     return document.querySelectorAll("[data-completed=true]")
   }
 
   get clearCompletedButton() {
     return document.getElementById("clear_completed_button")
+  }
+
+  get editTodoForm() {
+    return document.querySelector("form.edit-form:not(.hidden)")
   }
 
   setViewState() {
@@ -62,7 +111,7 @@ export default class extends Controller {
     }
     // remove all edit todo forms
     for (let editForm of document.getElementsByClassName('edit-form')) {
-      editForm.remove()
+      editForm.classList.add('hidden')
     }
   }
 
@@ -76,6 +125,13 @@ export default class extends Controller {
     this.clearCompletedButton.setAttribute('disabled', true)
     this.clearCompletedButton.classList.add('clear-completed-btn--disabled');
     this.clearCompletedButton.classList.remove('clear-completed-btn--enabled');
+  }
+
+  focus(element) {
+    const inputText = element.value
+    element.focus()
+    element.value = ""
+    element.value = inputText
   }
 }
 
