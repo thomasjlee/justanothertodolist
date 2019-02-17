@@ -1,4 +1,4 @@
-module TodoListsHelper
+module ListsHelper
   def any_completed?(todo_items)
     todo_items.any? { |item| item.completed? }
   end

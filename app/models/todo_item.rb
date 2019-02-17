@@ -1,5 +1,5 @@
 class TodoItem < ApplicationRecord
-  belongs_to :todo_list
+  belongs_to :list
   validates_presence_of :content
   before_save :trim
 

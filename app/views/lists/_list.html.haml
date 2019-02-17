@@ -1,0 +1,7 @@
+.col-sm-8.ml-auto.mr-auto
+  = link_to list_path(list) do
+    .card.todo-list__card.mb-4.border-0.rounded-0
+      .card-body.text-center.p-3
+        %h2.todo-list__title= list.title
+        %p.text-dark.mb-0= list.description
+

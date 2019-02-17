@@ -1,5 +1,5 @@
--# Update id to edit_todo_list or edit_todo_list_form
-= form_with model: @todo_list,
+-# Update id to edit_list or edit_list_form
+= form_with model: @list,
   remote: true,
   id: "edit_todo_list_form" do |f|
   .form-group.text-left.mb-0
@@ -20,5 +20,5 @@
       style: "cursor: pointer;"
     .small.text-secondary.px-2
       |
-    = link_to "Cancel", todo_list_path(@todo_list), class: "text-secondary small"
+    = link_to "Cancel", list_path(@list), class: "text-secondary small"
 

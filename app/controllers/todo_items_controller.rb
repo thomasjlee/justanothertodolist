@@ -1,14 +1,14 @@
 class TodoItemsController < ApplicationController
-  before_action :set_todo_list
+  before_action :set_list
   before_action :set_todo_item, except: [:create, :clear_completed]
 
   def create
-    @todo_item = @todo_list.todo_items.build(todo_item_params)
+    @todo_item = @list.todo_items.build(todo_item_params)
     if @todo_item.save
       if params[:js] == "true"
         render @todo_item
       else
-        redirect_to @todo_list
+        redirect_to @list
       end
     else
       # TODO: handle error case
@@ -16,8 +16,8 @@ class TodoItemsController < ApplicationController
   end
 
   def edit
-    @todo_list_items = @todo_list.todo_items.order(created_at: :asc)
-    render "todo_lists/show"
+    @list_items = @list.todo_items.order(created_at: :asc)
+    render "lists/show"
   end
 
   def update
@@ -25,7 +25,7 @@ class TodoItemsController < ApplicationController
       if params[:js] == "true"
         render plain: @todo_item.content
       else
-        redirect_to @todo_list
+        redirect_to @list
       end
     else
       # TODO: handle error case
@@ -34,30 +34,30 @@ class TodoItemsController < ApplicationController
 
   def destroy
     @todo_item.destroy
-    redirect_to @todo_list unless params[:js] == "true"
+    redirect_to @list unless params[:js] == "true"
   end
 
   def complete
     if @todo_item.update_attributes(todo_item_params)
-      redirect_to @todo_list unless params[:js] == "true"
+      redirect_to @list unless params[:js] == "true"
     else
       # TODO: handle error case
     end
   end
 
   def clear_completed
-    @todo_list.todo_items.where(completed: true).destroy_all
-    redirect_to @todo_list unless params[:js] == "true"
+    @list.todo_items.where(completed: true).destroy_all
+    redirect_to @list unless params[:js] == "true"
   end
 
   private
 
-  def set_todo_list
-    @todo_list = TodoList.find(params[:todo_list_id])
+  def set_list
+    @list = List.find(params[:list_id])
   end
 
   def set_todo_item
-    @todo_item = @todo_list.todo_items.find(params[:id])
+    @todo_item = @list.todo_items.find(params[:id])
   end
 
   def todo_item_params

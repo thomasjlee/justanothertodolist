@@ -11,14 +11,14 @@ RSpec.describe TodoItem, type: :model do
     expect(todo_item.errors.messages[:content]).to include "can't be blank"
   end
 
-  it "is invalid without a todo list" do
-    todo_item = FactoryBot.build(:todo_item, todo_list: nil)
+  it "is invalid without a list" do
+    todo_item = FactoryBot.build(:todo_item, list: nil)
     todo_item.valid?
-    expect(todo_item.errors.messages[:todo_list]).to include "must exist"
+    expect(todo_item.errors.messages[:list]).to include "must exist"
   end
 
-  it "belongs to a todo list" do
-    association = described_class.reflect_on_association(:todo_list)
+  it "belongs to a list" do
+    association = described_class.reflect_on_association(:list)
     expect(association.macro).to eq :belongs_to
   end
 end

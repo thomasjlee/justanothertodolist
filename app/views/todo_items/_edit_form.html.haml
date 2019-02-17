@@ -1,6 +1,6 @@
 -# Add client-side validations
 = form_with model: todo_item,
-  url: todo_list_todo_item_path(@todo_list, todo_item),
+  url: list_todo_item_path(@list, todo_item),
   class: "edit-form w-100 px-1 pt-1 #{ 'hidden' unless is_editing_todo?(todo_item) }",
   data: { "todo-id": todo_item.id } do |f|
   = f.text_area :content,

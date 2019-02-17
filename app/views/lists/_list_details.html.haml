@@ -1,11 +1,11 @@
 #todo_list_details
-  %h2= @todo_list.title
-  %p.mb-2.text-dark= @todo_list.description
+  %h2= @list.title
+  %p.mb-2.text-dark= @list.description
   %ul.nav.justify-content-center
     %li.nav-item
       - if params[:prompt_delete] == "true"
         = link_to "Cancel",
-          @todo_list,
+          @list,
           class: "nav-link text-secondary px-2 small"
       - else
         = link_to "Edit",
@@ -16,7 +16,7 @@
         |
     - if params[:prompt_delete] == "true"
       %li.nav-item
-        = form_with model: @todo_list,
+        = form_with model: @list,
           method: :delete,
           local: true do |f|
           = f.submit "Confirm Delete",

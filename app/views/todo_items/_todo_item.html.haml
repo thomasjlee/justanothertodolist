@@ -1,9 +1,9 @@
 %li.todo-item.list-group-item.d-flex.justify-content-between{id: [todo_item.id], data: {completed: "#{todo_item.completed}"}}
   .todo-row-left.d-flex
-    = form_with model: [@todo_list, todo_item],
+    = form_with model: [@list, todo_item],
       method: :patch,
-      url: complete_todo_list_todo_item_path(@todo_list, todo_item),
-      data: { "todo-id": todo_item.id, target: "stimulus.form", action: "ajax:success->todo-lists#onToggleCompleteSuccess" } do |f|
+      url: complete_list_todo_item_path(@list, todo_item),
+      data: { "todo-id": todo_item.id, target: "stimulus.form", action: "ajax:success->lists#onToggleCompleteSuccess" } do |f|
       = f.button octicon("check", height: 16),
         name: "todo_item[completed]",
         value: !todo_item.completed,
@@ -19,15 +19,15 @@
 
   .todo-row-right.d-flex.justify-content-end.align-items-start
     = link_to octicon("pencil", height: 16),
-      is_editing_todo?(todo_item) ? todo_list_path(@todo_list) : edit_todo_list_todo_item_path(@todo_list, todo_item.id),
+      is_editing_todo?(todo_item) ? list_path(@list) : edit_list_todo_item_path(@list, todo_item.id),
       class: "edit-btn btn btn-sm btn-outline-warning rounded-circle mr-1",
       local: true,
-      data: { action: "todo-lists#onEditButtonClick", "todo-id": todo_item.id, tmp: todo_item.id }
+      data: { action: "lists#onEditButtonClick", "todo-id": todo_item.id, tmp: todo_item.id }
 
-    = form_with model: [@todo_list, todo_item],
+    = form_with model: [@list, todo_item],
       method: :delete,
       id: "destroy_todo_item_#{todo_item.id}",
-      data: { target: "stimulus.form", action: "ajax:success->todo-lists#onDestroy", "todo-id": todo_item.id } do |f|
+      data: { target: "stimulus.form", action: "ajax:success->lists#onDestroy", "todo-id": todo_item.id } do |f|
       = f.button octicon("trashcan", :height => 16),
         class: "btn btn-sm btn-outline-danger rounded-circle",
         data: { disable_with: octicon("trashcan", height: 16) }

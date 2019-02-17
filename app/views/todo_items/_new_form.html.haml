@@ -1,6 +1,6 @@
-= form_with model: [@todo_list, @todo_list.todo_items.new],
+= form_with model: [@list, @list.todo_items.new],
   id: "new_todo_item_form",
-  data: { target: "stimulus.form", action: "todo-lists#onCreate ajax:success->todo-lists#onCreateSuccess" } do |f|
+  data: { target: "stimulus.form", action: "lists#onCreate ajax:success->lists#onCreateSuccess" } do |f|
   .input-group
     = f.text_field :content,
       autofocus:   true,
@@ -8,7 +8,7 @@
       pattern:     ".*\\S+.*",
       id:          "new_todo_item_content",
       class:       "form-control form-control-sm border-0 shadow-none py-0 px-2",
-      data: { target: "todo-lists.newTodoInput" }
+      data: { target: "lists.newTodoInput" }
     = f.button octicon('plus', height: 16),
       class: "btn btn-sm btn-outline-info rounded-circle",
       data: { disable_with: octicon('plus', height: 16) }
