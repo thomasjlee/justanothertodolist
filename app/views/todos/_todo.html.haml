@@ -1,0 +1,34 @@
+%li.todo-item.list-group-item.d-flex.justify-content-between{id: [todo.id], data: {completed: "#{todo.completed}"}}
+  .todo-row-left.d-flex
+    = form_with model: [@list, todo],
+      method: :patch,
+      url: complete_list_todo_path(@list, todo),
+      data: { "todo-id": todo.id, target: "stimulus.form", action: "ajax:success->lists#onToggleCompleteSuccess" } do |f|
+      = f.button octicon("check", height: 16),
+        name: "todo[completed]",
+        value: !todo.completed,
+        class: "btn btn-sm rounded-circle #{todo.completed? ? 'btn-completed btn-info' : 'btn-not-completed btn-outline-info'}"
+
+    .todo-text.pt-1{class: [("completed" if todo.completed?), ("px-2" unless is_editing_todo?(todo))],
+      id: "todo_item_content_#{todo.id}"}
+      = simple_format (todo.content unless is_editing_todo?(todo)),
+        class: "m-0"
+
+  = render 'todos/edit_form',
+    { todo: todo }
+
+  .todo-row-right.d-flex.justify-content-end.align-items-start
+    = link_to octicon("pencil", height: 16),
+      is_editing_todo?(todo) ? list_path(@list) : edit_list_todo_path(@list, todo.id),
+      class: "edit-btn btn btn-sm btn-outline-warning rounded-circle mr-1",
+      local: true,
+      data: { action: "lists#onEditButtonClick", "todo-id": todo.id, tmp: todo.id }
+
+    = form_with model: [@list, todo],
+      method: :delete,
+      id: "destroy_todo_item_#{todo.id}",
+      data: { target: "stimulus.form", action: "ajax:success->lists#onDestroy", "todo-id": todo.id } do |f|
+      = f.button octicon("trashcan", :height => 16),
+        class: "btn btn-sm btn-outline-danger rounded-circle",
+        data: { disable_with: octicon("trashcan", height: 16) }
+

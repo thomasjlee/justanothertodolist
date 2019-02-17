@@ -1,4 +1,4 @@
-= form_with model: [@list, @list.todo_items.new],
+= form_with model: [@list, @list.todos.new],
   id: "new_todo_item_form",
   data: { target: "stimulus.form", action: "lists#onCreate ajax:success->lists#onCreateSuccess" } do |f|
   .input-group

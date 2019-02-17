@@ -45,7 +45,7 @@ class ListsController < ApplicationController
   end
 
   def set_ordered_items
-    @list_items = @list.todo_items.order(created_at: :asc)
+    @list_todos = @list.todos.order(created_at: :asc)
   end
 
   def list_params

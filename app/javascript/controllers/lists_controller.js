@@ -19,7 +19,7 @@ export default class extends Controller {
 
     const todoId = event.currentTarget.dataset.todoId
     const todoLi = document.getElementById(todoId)
-    const completeButton = event.currentTarget.querySelector("button[name='todo_item[completed]']")
+    const completeButton = event.currentTarget.querySelector("button[name='todo[completed]']")
 
     todoLi.querySelector(".todo-text").classList.toggle("completed")
     todoLi.dataset.completed = todoLi.dataset.completed === "true" ? "false" : "true"

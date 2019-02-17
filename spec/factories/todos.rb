@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :todo_item do
+  factory :todo do
     content { "First, boil the water" }
     list
   end

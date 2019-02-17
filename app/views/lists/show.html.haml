@@ -8,26 +8,26 @@
           - else
             = render "lists/list_details"
         %ul.list-group.list-group-flush#todo-items{ data: { target: "lists.todos" } }
-          - @list_items.each do |item|
-            = render "todo_items/todo_item", todo_item: item
+          - @list_todos.each do |todo|
+            = render "todos/todo", todo: todo
 
   .row.text-center
     .col-sm-8.ml-auto.mr-auto
       .card.border-0.rounded-0.bg-white
         .card-body.p-2
-          = render "todo_items/new_form"
+          = render "todos/new_form"
 
   .row.text-center.mt-4
     .col-sm-8.ml-auto.mr-auto
       .d-inline-flex
         = button_to "Clear Completed",
-          clear_list_todo_items_path(@list),
-          disabled: !any_completed?(@list_items),
+          clear_list_todos_path(@list),
+          disabled: !any_completed?(@list_todos),
           remote: true,
           method: :delete,
           form: { "data-target": "stimulus.form", "data-action": "ajax:success->lists#onClearCompletedSuccess" },
           form_class: "mr-2",
           id: "clear_completed_button",
-          class: "clear-completed-btn #{ any_completed?(@list_items) ? 'clear-completed-btn--enabled' : 'clear-completed-btn--disabled' }"
+          class: "clear-completed-btn #{ any_completed?(@list_todos) ? 'clear-completed-btn--enabled' : 'clear-completed-btn--disabled' }"
         = link_to "All Lists", lists_path, class: "all-lists-btn btn btn-outline-info bg-white border-0 rounded-0 shadow-lg"
 

@@ -11,13 +11,13 @@ RSpec.describe List, type: :model do
     expect(list.errors[:title]).to include "can't be blank"
   end
 
-  it "has many todo items" do
-    association = described_class.reflect_on_association(:todo_items)
+  it "has many todos" do
+    association = described_class.reflect_on_association(:todos)
     expect(association.macro).to eq :has_many
   end
 
-  it "has dependent todo items" do
-    association = described_class.reflect_on_association(:todo_items)
+  it "has dependent todos" do
+    association = described_class.reflect_on_association(:todos)
     expect(association.options[:dependent]).to eq :destroy
   end
 end
