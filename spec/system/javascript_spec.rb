@@ -41,32 +41,32 @@ RSpec.describe "JavaScripts", type: :system, js: true do
       end
 
       it "hides the corresponding todo content" do
-        find("a[href='#{edit_list_todo_path(@list, @todo)}']").click
+        find("a.edit-btn[data-todo-id='#{@todo.id}']").click
         todo = page.find("div#todo_item_content_#{@todo.id}", visible: false)
         expect(todo[:class]).to have_text "hidden"
       end
 
       it "shows the form for the corresponding todo" do
-        find("a[href='#{edit_list_todo_path(@list, @todo)}']").click
+        find("a.edit-btn[data-todo-id='#{@todo.id}']").click
         expect(page).to have_css "textarea#edit_todo_item_content_#{@todo.id}"
       end
 
       it "autofocuses on the edit todo form" do
-        find("a[href='#{edit_list_todo_path(@list, @todo)}']").click
+        find("a.edit-btn[data-todo-id='#{@todo.id}']").click
         expect(page).to have_css "textarea:focus"
       end
 
       it "cancels the edit if the same edit button is clicked twice" do
-        find("a[href='#{edit_list_todo_path(@list, @todo)}']").click
-        find("a[href='#{edit_list_todo_path(@list, @todo)}']").click
+        find("a.edit-btn[data-todo-id='#{@todo.id}']").click
+        find("a.edit-btn[data-todo-id='#{@todo.id}']").click
         todo = page.find("div#todo_item_content_#{@todo.id}", visible: false)
         expect(todo[:style]).to_not have_text "display: none;"
         expect(page).to_not have_css "textarea#edit_todo_item_content_#{@todo.id}"
       end
 
       it "when clicking on two different edit buttons, cancels the first and enables editing for the second" do
-        find("a[href='#{edit_list_todo_path(@list, @todo)}']").click
-        find("a[href='#{edit_list_todo_path(@list, @another_todo)}']").click
+        find("a.edit-btn[data-todo-id='#{@todo.id}']").click
+        find("a.edit-btn[data-todo-id='#{@another_todo.id}']").click
         todo = page.find("div#todo_item_content_#{@todo.id}", visible: false)
         another_todo = page.find("div#todo_item_content_#{@another_todo.id}", visible: false)
 

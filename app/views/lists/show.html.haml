@@ -1,4 +1,4 @@
-%div{ data: { controller: "lists" } }
+%div{ data: { controller: "lists", list_id: @list.id } }
   .row
     .col-sm-8.ml-auto.mr-auto
       .card.mb-4.border-0.rounded-0
@@ -7,9 +7,8 @@
             = render "edit_form"
           - else
             = render "lists/list_details"
-        %ul.list-group.list-group-flush#todo-items{ data: { target: "lists.todos" } }
-          - @list_todos.each do |todo|
-            = render "todos/todo", todo: todo
+        %ul.list-group.list-group-flush#todo-items{ data: { controller: "todos", target: "lists.todos" } }
+          = render @list_todos
 
   .row.text-center
     .col-sm-8.ml-auto.mr-auto

@@ -22,7 +22,7 @@
       is_editing_todo?(todo) ? list_path(@list) : edit_list_todo_path(@list, todo.id),
       class: "edit-btn btn btn-sm btn-outline-warning rounded-circle mr-1",
       local: true,
-      data: { action: "lists#onEditButtonClick", "todo-id": todo.id, tmp: todo.id }
+      data: { action: "lists#onEditButtonClick", target: "todos.editTodoButton", todo_id: todo.id }
 
     = form_with model: [@list, todo],
       method: :delete,

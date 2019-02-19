@@ -9,7 +9,7 @@
           class: "nav-link text-secondary px-2 small"
       - else
         = link_to "Edit",
-          { edit: true },
+          list_path(@list, { edit: true }),
           class: "nav-link text-secondary px-2 small"
     %li.nav-item
       .small.text-secondary.py-2

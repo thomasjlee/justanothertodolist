@@ -23,28 +23,41 @@ RSpec.describe "List System", type: :system do
   describe "When editing a list" do
     before :each do
       @list = FactoryBot.create(:list)
+      @todo = FactoryBot.create(:todo, list: @list)
       visit list_path(@list)
-      click_on "Edit"
     end
 
     context "with Javascript enabled", js: true do
       it "replaces the list details with the edit list form" do
+        click_on "Edit"
         expect(page).to have_field "list[title]"
         expect(page).to have_field "list[description]"
         expect(page).to_not have_css "div#list_details"
       end
 
       it "adds edit=true to query params" do
+        click_on "Edit"
         expect(page).to have_current_path list_path(@list) + "?edit=true"
       end
 
       it "autofocuses on the list title input" do
+        click_on "Edit"
         expect(page).to have_css "input.form-control:focus"
+      end
+
+      it "renders the correct view even when on the edit todo path" do
+        visit edit_list_todo_path(@list, @todo)
+        click_on "Edit"
+
+        expect(page).to have_field "list[title]"
+        expect(page).to have_field "list[description]"
+        expect(page).to_not have_css "div#list_details"
       end
     end
 
     context "with Javascript disabled" do
       it "adds edit=true to query params" do
+        click_on "Edit"
         expect(page).to have_current_path "/lists/#{@list.id}?edit=true"
         expect(page).to have_field "list[title]"
         expect(page).to have_field "list[description]"

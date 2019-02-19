@@ -11,6 +11,9 @@ export default class extends Controller {
     const [data, status, xhr] = event.detail
     this.todosTarget.insertAdjacentHTML("beforeend", xhr.response)
     this.newTodoInputTarget.value = ""
+    const newTodo = this.todosTarget.lastElementChild
+    const editButton = newTodo.querySelector("a.edit-btn")
+    editButton.setAttribute("href", "/lists/" + this.listId.toString())
   }
 
   // TODO: refactor - this method is doing quite a lot
@@ -132,6 +135,10 @@ export default class extends Controller {
     element.focus()
     element.value = ""
     element.value = inputText
+  }
+
+  get listId() {
+    return document.querySelector("[data-list-id]").dataset.listId
   }
 }
 

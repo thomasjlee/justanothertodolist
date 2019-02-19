@@ -26,7 +26,7 @@ RSpec.describe "Todos", type: :system do
       new_todo_form = "form[action='#{list_todos_path(todo.list)}']"
 
       visit list_path(todo.list)
-      find("a[href='#{edit_todo_path}']").click
+      find("a.edit-btn[data-todo-id='#{todo.id}']").click
       fill_in "new_todo_item_content", with: "Grind the coffee."
       find("#{new_todo_form} button[type='submit']").click
 
@@ -59,7 +59,7 @@ RSpec.describe "Todos", type: :system do
         @todo = FactoryBot.create(:todo)
         @todo_path = list_todo_path(@todo.list, @todo)
         @edit_todo_path = edit_list_todo_path(@todo.list, @todo)
-        @edit_link_css = "a[href='#{@edit_todo_path}']"
+        @edit_link_css = "a.edit-btn[data-todo-id='#{@todo.id}']"
         @edit_form_css = "form[action='#{@todo_path}'] textarea[name='todo[content]']"
       end
 
