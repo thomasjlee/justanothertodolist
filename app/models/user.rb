@@ -9,4 +9,6 @@ class User < ApplicationRecord
   validates :username, presence: true
   validates :token,    presence: true
   validates :secret,   presence: true
+
+  has_many :lists
 end
