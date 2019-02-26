@@ -1,9 +1,40 @@
 require "rails_helper"
 
+# TODO: Move to separate module
+
+def auth_hash(user)
+  OmniAuth::AuthHash.new({
+    provider: "twitter",
+    uid: user.uid,
+    info: {
+      nickname: user.username,
+    },
+    credentials: {
+      token: user.token,
+      secret: user.secret
+    }
+  })
+end
+
+def stub_omniauth(user)
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.mock_auth[:twitter] = auth_hash(user)
+end
+
+def login
+  visit root_path
+  click_on "Sign in with Twitter"
+end
+
+###
+
 RSpec.describe "List System", type: :system do
   describe "When creating a list" do
     it "creates a new list" do
-      visit root_path
+      user = FactoryBot.create(:user)
+      stub_omniauth(user)
+      login
+
       click_on "New List"
       expect(page).to have_current_path new_list_path
       fill_in "list[title]", with: "New List"
@@ -13,7 +44,11 @@ RSpec.describe "List System", type: :system do
     end
 
     it "shows the newly created list" do
-      list = FactoryBot.create(:list)
+      user = FactoryBot.create(:user)
+      stub_omniauth(user)
+      login
+      list = FactoryBot.create(:list, user: user)
+
       visit root_path
       click_on list.title
       expect(page).to have_current_path "/lists/#{list.id}"

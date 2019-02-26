@@ -10,11 +10,10 @@ class ListsController < ApplicationController
   end
 
   def new
-    @list = List.new
   end
 
   def create
-    @list = List.new(list_params)
+    @list = current_user.lists.new(list_params)
     respond_to do |format|
       if @list.save
         format.html { redirect_to @list }

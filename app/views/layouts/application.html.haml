@@ -10,14 +10,6 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
   %body.bg-light
-    - if current_user
-      %small
-        Signed in as #{current_user.username}
-        = form_with url: sign_out_path, method: :delete do |f|
-          = f.button "Sign out"
-    - else
-      = link_to "Sign in with Twitter", "/auth/twitter"
-
     -# stimulus_controller prepares forms to be handled by stimulus
     .container.mt-3.mb-4{ data: { controller: "stimulus" } }
       = yield

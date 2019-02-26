@@ -2,7 +2,7 @@
   .col-md-8.ml-auto.mr-auto
     .card.mb-3.border-0.rounded-0
       .card-body
-        = form_with model: @list,
+        = form_with model: List.new,
           local: true do |f|
           .form-group.text-left.mb-0
             = f.label :title, class: "text-muted small pl-1"
