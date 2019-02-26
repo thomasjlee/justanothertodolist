@@ -39,6 +39,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem 'webpacker', '~> 3.5'
 gem 'rufo', '~> 0.4.2'
+gem 'omniauth-twitter', '~> 1.4.0'
 
 group :test do
   gem 'capybara', '~> 2.17.0'
