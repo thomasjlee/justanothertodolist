@@ -1,6 +1,7 @@
 class ListsController < ApplicationController
+  before_action :require_authentication, only: [:new, :create]
   before_action :set_list, only: [:show, :update, :destroy]
-  before_action :authorize_or_redirect, only: [:show]
+  before_action :authorize_or_redirect, only: [:show, :update, :destroy]
   before_action :set_ordered_items, only: [:show]
 
   def index
@@ -39,6 +40,10 @@ class ListsController < ApplicationController
   end
 
   private
+
+  def require_authentication
+    redirect_to lists_path unless current_user
+  end
 
   def set_list
     @list = List.find(params[:id])

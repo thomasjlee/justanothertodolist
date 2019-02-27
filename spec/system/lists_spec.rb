@@ -1,4 +1,3 @@
-require "pry"
 require "rails_helper"
 
 def user_grants_authorization_on_twitter(twitter_callback_hash)

@@ -48,12 +48,12 @@ RSpec.describe User, type: :model do
     expect(user.errors[:secret]).to include "can't be blank"
   end
 
-  xit "has many lists" do
+  it "has many lists" do
     association = described_class.reflect_on_association(:lists)
     expect(association.macro).to eq :has_many
   end
 
-  xit "has dependent lists" do
+  it "has dependent lists" do
     association = described_class.reflect_on_association(:lists)
     expect(association.options[:dependent]).to eq :destroy
   end

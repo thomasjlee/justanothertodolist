@@ -1,6 +1,7 @@
 class TodosController < ApplicationController
   before_action :set_list
   before_action :set_todo, except: [:create, :clear_completed]
+  before_action :authorize_or_redirect
 
   def create
     @todo = @list.todos.build(todo_params)
@@ -62,5 +63,9 @@ class TodosController < ApplicationController
 
   def todo_params
     params.require(:todo).permit(:content, :completed)
+  end
+
+  def authorize_or_redirect
+    redirect_to lists_path unless @list.user == current_user
   end
 end
