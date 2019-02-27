@@ -1,5 +1,6 @@
 class ListsController < ApplicationController
   before_action :set_list, only: [:show, :update, :destroy]
+  before_action :authorize_or_redirect, only: [:show]
   before_action :set_ordered_items, only: [:show]
 
   def index
@@ -41,6 +42,10 @@ class ListsController < ApplicationController
 
   def set_list
     @list = List.find(params[:id])
+  end
+
+  def authorize_or_redirect
+    redirect_to lists_path unless @list.user == current_user
   end
 
   def set_ordered_items
