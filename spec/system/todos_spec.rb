@@ -1,9 +1,34 @@
 require "rails_helper"
 
+def user_grants_authorization_on_twitter(twitter_callback_hash)
+  OmniAuth.config.add_mock(:twitter, twitter_callback_hash)
+end
+
 RSpec.describe "Todos", type: :system do
+  let(:twitter_callback_hash) do
+    {
+      provider: "twitter",
+      uid: "1234567",
+      credentials: {
+        token: "222222",
+        secret: "333333",
+      },
+      info: {
+        nickname: "mock_nickname",
+      },
+    }
+  end
+
   describe "when creating a new todo" do
+    before :each do
+      OmniAuth.config.mock_auth[:twitter] = nil
+      @user = FactoryBot.create(:user)
+      user_grants_authorization_on_twitter(twitter_callback_hash.merge(uid: @user.uid))
+      visit "/auth/twitter"
+    end
+
     it "creates a new todo" do
-      list = FactoryBot.create(:list)
+      list = FactoryBot.create(:list, user: @user)
       visit list_path(list)
       fill_in "new_todo_item_content", with: "Boil the water"
       expect {
@@ -13,7 +38,7 @@ RSpec.describe "Todos", type: :system do
     end
 
     it "clears the new todo form", js: true do
-      list = FactoryBot.create(:list)
+      list = FactoryBot.create(:list, user: @user)
       visit list_path(list)
       fill_in "new_todo_item_content", with: "Boil the water."
       find("button[type='submit']").click
@@ -21,11 +46,12 @@ RSpec.describe "Todos", type: :system do
     end
 
     it "clears the new todo form even when an edit todo button was clicked", js: true do
-      todo = FactoryBot.create(:todo)
-      edit_todo_path = edit_list_todo_path(todo.list, todo)
-      new_todo_form = "form[action='#{list_todos_path(todo.list)}']"
+      list = FactoryBot.create(:list, user: @user)
+      todo = FactoryBot.create(:todo, list: list)
+      edit_todo_path = edit_list_todo_path(list, todo)
+      new_todo_form = "form[action='#{list_todos_path(list)}']"
 
-      visit list_path(todo.list)
+      visit list_path(list)
       find("a.edit-btn[data-todo-id='#{todo.id}']").click
       fill_in "new_todo_item_content", with: "Grind the coffee."
       find("#{new_todo_form} button[type='submit']").click
@@ -37,12 +63,20 @@ RSpec.describe "Todos", type: :system do
   end
 
   describe "when editing a todo" do
-    it "edits a todo" do
-      todo = FactoryBot.create(:todo)
-      todo_path = list_todo_path(todo.list, todo)
-      edit_todo_path = edit_list_todo_path(todo.list, todo)
+    before :each do
+      OmniAuth.config.mock_auth[:twitter] = nil
+      @user = FactoryBot.create(:user)
+      user_grants_authorization_on_twitter(twitter_callback_hash.merge(uid: @user.uid))
+      visit "/auth/twitter"
+    end
 
-      visit list_path(todo.list)
+    it "edits a todo" do
+      list = FactoryBot.create(:list, user: @user)
+      todo = FactoryBot.create(:todo, list: list)
+      todo_path = list_todo_path(list, todo)
+      edit_todo_path = edit_list_todo_path(list, todo)
+
+      visit list_path(list)
       find("a[href='#{edit_todo_path}']").click
       expect(page).to have_css "form[action='#{todo_path}']"
 
@@ -56,21 +90,22 @@ RSpec.describe "Todos", type: :system do
 
     describe "when the edit todo button is clicked", js: true do
       before(:each) do
-        @todo = FactoryBot.create(:todo)
-        @todo_path = list_todo_path(@todo.list, @todo)
-        @edit_todo_path = edit_list_todo_path(@todo.list, @todo)
+        @list = FactoryBot.create(:list, user: @user)
+        @todo = FactoryBot.create(:todo, list: @list)
+        @todo_path = list_todo_path(@list, @todo)
+        @edit_todo_path = edit_list_todo_path(@list, @todo)
         @edit_link_css = "a.edit-btn[data-todo-id='#{@todo.id}']"
         @edit_form_css = "form[action='#{@todo_path}'] textarea[name='todo[content]']"
       end
 
       it "shows the edit todo form" do
-        visit list_path(@todo.list)
+        visit list_path(@list)
         find(@edit_link_css).click
         expect(page).to have_css @edit_form_css
       end
 
       it "hides the edit todo form if the form is already shown" do
-        visit list_path(@todo.list)
+        visit list_path(@list)
         2.times { find(@edit_link_css).click }
         expect(page).to_not have_css @edit_form_css
       end
@@ -79,10 +114,16 @@ RSpec.describe "Todos", type: :system do
 
   describe "when deleting a todo" do
     it "deletes a todo" do
-      todo = FactoryBot.create(:todo)
-      todo_path = list_todo_path(todo.list, todo)
+      OmniAuth.config.mock_auth[:twitter] = nil
+      user = FactoryBot.create(:user)
+      user_grants_authorization_on_twitter(twitter_callback_hash.merge(uid: user.uid))
+      visit "/auth/twitter"
 
-      visit list_path(todo.list)
+      list = FactoryBot.create(:list, user: user)
+      todo = FactoryBot.create(:todo, list: list)
+      todo_path = list_todo_path(list, todo)
+
+      visit list_path(list)
       expect {
         within(".todo-row-right") do
           find("button[type='submit']").click
@@ -92,16 +133,24 @@ RSpec.describe "Todos", type: :system do
   end
 
   describe "when toggling todo completed" do
+    before :each do
+      OmniAuth.config.mock_auth[:twitter] = nil
+      @user = FactoryBot.create(:user)
+      @list = FactoryBot.create(:list, user: @user)
+      user_grants_authorization_on_twitter(twitter_callback_hash.merge(uid: @user.uid))
+      visit "/auth/twitter"
+    end
+
     it "completes a todo" do
-      todo = FactoryBot.create(:todo)
-      visit list_path(todo.list)
+      todo = FactoryBot.create(:todo, list: @list)
+      visit list_path(@list)
       find("[name='todo[completed]']").click
       expect(todo.reload.completed).to be true
     end
 
     it "uncompletes a todo" do
-      todo = FactoryBot.create(:todo, completed: true)
-      visit list_path(todo.list)
+      todo = FactoryBot.create(:todo, list: @list, completed: true)
+      visit list_path(@list)
       expect(page).to have_css "button.btn-completed"
       find("[name='todo[completed]']").click
       expect(todo.reload.completed).to be false

@@ -1,42 +1,35 @@
+require "pry"
 require "rails_helper"
 
-# TODO: Move to separate module
-
-def auth_hash(user)
-  OmniAuth::AuthHash.new({
-    provider: "twitter",
-    uid: user.uid,
-    info: {
-      nickname: user.username,
-    },
-    credentials: {
-      token: user.token,
-      secret: user.secret
-    }
-  })
+def user_grants_authorization_on_twitter(twitter_callback_hash)
+  OmniAuth.config.add_mock(:twitter, twitter_callback_hash)
 end
-
-def stub_omniauth(user)
-  OmniAuth.config.test_mode = true
-  OmniAuth.config.mock_auth[:twitter] = auth_hash(user)
-end
-
-def login
-  visit root_path
-  click_on "Sign in with Twitter"
-end
-
-###
 
 RSpec.describe "List System", type: :system do
-  describe "When creating a list" do
-    it "creates a new list" do
-      user = FactoryBot.create(:user)
-      stub_omniauth(user)
-      login
+  let(:twitter_callback_hash) do
+    {
+      provider: "twitter",
+      uid: "1234567",
+      credentials: {
+        token: "222222",
+        secret: "333333",
+      },
+      info: {
+        nickname: "mock_nickname",
+      },
+    }
+  end
 
+  describe "When creating a list" do
+    before :each do
+      OmniAuth.config.mock_auth[:twitter] = nil
+      @user = FactoryBot.create(:user)
+      user_grants_authorization_on_twitter(twitter_callback_hash.merge(uid: @user.uid))
+      visit "/auth/twitter"
+    end
+
+    it "creates a new list" do
       click_on "New List"
-      expect(page).to have_current_path new_list_path
       fill_in "list[title]", with: "New List"
       fill_in "list[description]", with: "This is a new list."
       expect { click_on "Save" }.to change(List, :count).by(1)
@@ -44,11 +37,7 @@ RSpec.describe "List System", type: :system do
     end
 
     it "shows the newly created list" do
-      user = FactoryBot.create(:user)
-      stub_omniauth(user)
-      login
-      list = FactoryBot.create(:list, user: user)
-
+      list = FactoryBot.create(:list, user: @user)
       visit root_path
       click_on list.title
       expect(page).to have_current_path "/lists/#{list.id}"
@@ -57,8 +46,12 @@ RSpec.describe "List System", type: :system do
 
   describe "When editing a list" do
     before :each do
-      @list = FactoryBot.create(:list)
+      OmniAuth.config.mock_auth[:twitter] = nil
+      @user = FactoryBot.create(:user)
+      @list = FactoryBot.create(:list, user: @user)
       @todo = FactoryBot.create(:todo, list: @list)
+      user_grants_authorization_on_twitter(twitter_callback_hash.merge(uid: @user.uid))
+      visit "/auth/twitter"
       visit list_path(@list)
     end
 
@@ -102,9 +95,16 @@ RSpec.describe "List System", type: :system do
   end
 
   describe "When updating a list" do
+    before :each do
+      OmniAuth.config.mock_auth[:twitter] = nil
+      @user = FactoryBot.create(:user)
+      user_grants_authorization_on_twitter(twitter_callback_hash.merge(uid: @user.uid))
+      visit "/auth/twitter"
+    end
+
     context "with Javascript enabled", js: true do
       before :each do
-        @list = FactoryBot.create(:list)
+        @list = FactoryBot.create(:list, user: @user)
         visit list_path(@list)
         click_on "Edit"
         fill_in "list[title]", with: "Updated title"
@@ -125,18 +125,12 @@ RSpec.describe "List System", type: :system do
       it "updates the list" do
         expect(page).to have_text "Updated title"
         expect(page).to have_text "Updated description"
-        # I'm struggling to figure out why exactly the following expectation
-        # only passes some of the time. Adding `sleep` for a fraction of a second
-        # allows it to pass. There must be a race condition between the driver
-        # and the database. Reading: https://bibwild.wordpress.com/
-        # 2016/02/18/struggling-towards-reliable-capybara-javascript-testing/
-        # expect(@list.reload.title).to eq "Updated title"
       end
     end
 
     context "with Javascript disabled" do
       it "updates the list" do
-        list = FactoryBot.create(:list)
+        list = FactoryBot.create(:list, user: @user)
         visit list_path(list)
         click_on "Edit"
         fill_in "list[title]", with: "Updated title"
@@ -151,8 +145,15 @@ RSpec.describe "List System", type: :system do
   end
 
   describe "deleting a list" do
+    before :each do
+      OmniAuth.config.mock_auth[:twitter] = nil
+      @user = FactoryBot.create(:user)
+      user_grants_authorization_on_twitter(twitter_callback_hash.merge(uid: @user.uid))
+      visit "/auth/twitter"
+    end
+
     it "prompts the user to confirm delete" do
-      list = FactoryBot.create(:list)
+      list = FactoryBot.create(:list, user: @user)
       visit list_path(list)
       click_on "Delete"
       expect(page).to have_current_path list_path(list) + "?prompt_delete=true"
@@ -160,7 +161,7 @@ RSpec.describe "List System", type: :system do
     end
 
     it "can be cancelled" do
-      list = FactoryBot.create(:list)
+      list = FactoryBot.create(:list, user: @user)
       visit list_path(list)
       click_on "Delete"
       click_on "Cancel"
@@ -169,7 +170,7 @@ RSpec.describe "List System", type: :system do
     end
 
     it "deletes the list upon confirmation" do
-      list = FactoryBot.create(:list)
+      list = FactoryBot.create(:list, user: @user)
       visit list_path(list)
       click_on "Delete"
       expect { click_on "Confirm Delete" }.to change(List, :count).by(-1)

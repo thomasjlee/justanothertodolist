@@ -1,15 +1,40 @@
 require "rails_helper"
 
-RSpec.describe "JavaScripts", type: :system, js: true do
-  describe "Todos" do
-    context "When creating a todo" do
-      before :each do
-        @list = FactoryBot.create(:list)
-        @todo = FactoryBot.create(:todo, list: @list)
-        visit list_path(@list)
-        fill_in "new_todo_item_content", with: "Grind the coffee beans"
-      end
+def user_grants_authorization_on_twitter(twitter_callback_hash)
+  OmniAuth.config.add_mock(:twitter, twitter_callback_hash)
+end
 
+RSpec.describe "JavaScripts", type: :system, js: true do
+  let(:twitter_callback_hash) do
+    {
+      provider: "twitter",
+      uid: "1234567",
+      credentials: {
+        token: "222222",
+        secret: "333333",
+      },
+      info: {
+        nickname: "mock_nickname",
+      },
+    }
+  end
+
+  before :each do
+    OmniAuth.config.mock_auth[:twitter] = nil
+    @user = FactoryBot.create(:user)
+    user_grants_authorization_on_twitter(twitter_callback_hash.merge(uid: @user.uid))
+    visit "/auth/twitter"
+  end
+
+  describe "Todos" do
+    before :each do
+      @list = FactoryBot.create(:list, user: @user)
+      @todo = FactoryBot.create(:todo, list: @list)
+      visit list_path(@list)
+      fill_in "new_todo_item_content", with: "Grind the coffee beans"
+    end
+
+    context "When creating a todo" do
       it "adds the new todo to the DOM" do
         within("form#new_todo_item_form") { find("button[type=submit]").click }
         expect(page).to have_text "Grind the coffee beans"
@@ -34,7 +59,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
 
     context "When editing a todo" do
       before :each do
-        @list = FactoryBot.create(:list)
+        @list = FactoryBot.create(:list, user: @user)
         @todo = FactoryBot.create(:todo, list: @list)
         @another_todo = FactoryBot.create(:todo, list: @list)
         visit list_path(@list)
@@ -80,7 +105,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
 
     context "When updating a todo" do
       before :each do
-        list = FactoryBot.create(:list)
+        list = FactoryBot.create(:list, user: @user)
         @todo = FactoryBot.create(:todo, list: list)
         visit list_path(list)
         find("a.edit-btn").click
@@ -101,7 +126,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
 
     context "When destroying a todo" do
       before :each do
-        @list = FactoryBot.create(:list)
+        @list = FactoryBot.create(:list, user: @user)
         @todo = FactoryBot.create(:todo, list: @list)
         @todo_to_destroy = FactoryBot.create(:todo,
                                              content: "Destroy me",
@@ -137,7 +162,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
 
     context "When toggling todo completed" do
       before :each do
-        list = FactoryBot.create(:list)
+        list = FactoryBot.create(:list, user: @user)
         @todo = FactoryBot.create(:todo, list: list)
         visit list_path(list)
       end
@@ -174,7 +199,7 @@ RSpec.describe "JavaScripts", type: :system, js: true do
 
     context "When clearing completed todos" do
       before :each do
-        @list = FactoryBot.create(:list)
+        @list = FactoryBot.create(:list, user: @user)
         @todo_one = FactoryBot.create(:todo, list: @list,
                                              content: "Steam the milk", completed: true)
         @todo_two = FactoryBot.create(:todo, list: @list,
