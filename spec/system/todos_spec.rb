@@ -32,7 +32,7 @@ RSpec.describe "Todos", type: :system do
       visit list_path(list)
       fill_in "new_todo_item_content", with: "Boil the water"
       expect {
-        find("button[type='submit']").click
+        find("#new_todo_item_form button[type='submit']").click
       }.to change(Todo, :count).by(1)
       expect(page).to have_text "Boil the water"
     end
@@ -41,7 +41,7 @@ RSpec.describe "Todos", type: :system do
       list = FactoryBot.create(:list, user: @user)
       visit list_path(list)
       fill_in "new_todo_item_content", with: "Boil the water."
-      find("button[type='submit']").click
+      find("#new_todo_item_form button[type='submit']").click
       expect(find_field("new_todo_item_content").value).to eq ""
     end
 

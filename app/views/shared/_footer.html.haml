@@ -1,0 +1,16 @@
+.row.text-center.mt-4
+  .col-sm-8.ml-auto.mr-auto
+    %ul.nav.justify-content-center
+      - if current_user
+        %li.nav-item
+          .nav-link.text-info.px-2.small
+            Signed in as @#{current_user.username}
+        %li.nav-item
+          .small.text-secondary.py-2
+            |
+        %li.nav-item
+          = form_with url: sign_out_path, method: :delete do |f|
+            = f.button "Sign out", class: "border-0 p-2 small text-secondary bg-transparent", style: "cursor: pointer"
+      - else
+        %li.nav-item
+          = link_to "Sign in with Twitter", "/auth/twitter", class: "nav-link text-info px-2 small"

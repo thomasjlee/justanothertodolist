@@ -13,4 +13,4 @@
     -# stimulus_controller prepares forms to be handled by stimulus
     .container.mt-3.mb-4{ data: { controller: "stimulus" } }
       = yield
-
+      = render "shared/footer" unless params[:controller] == "static_pages"

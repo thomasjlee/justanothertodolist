@@ -1,0 +1,21 @@
+.col-sm-8.ml-auto.mr-auto
+  .card.mb-4.border-0.rounded-0
+    .card-body.text-center.p-3
+      %h2
+        Just Another Todolist
+
+      = link_to "/auth/twitter" do
+        %small.text-secondary
+          Please sign in or register with Twitter
+        = image_tag "twitter_icon.png", size: "30x30", class: "bg-info"
+      %br
+
+    .card-footer.bg-light.border-0
+      .d-flex.justify-content-between
+        = link_to "thomaslee.io", "https://www.thomaslee.io",
+          class: "small",
+          target: "_blank"
+
+        = link_to octicon("mark-github", height: 18),
+          "https://github.com/thomasjlee/justanothertodolist",
+          target: "_blank"

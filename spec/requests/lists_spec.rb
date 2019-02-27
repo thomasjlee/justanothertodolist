@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 def user_grants_authorization_on_twitter(twitter_callback_hash)
   OmniAuth.config.add_mock(:twitter, twitter_callback_hash)
@@ -21,9 +21,10 @@ RSpec.describe "Lists", type: :request do
 
   context "as guest user" do
     describe "GET /lists" do
-      it "responds successfully" do
+      it "redirects to home" do
         get lists_path
-        expect(response).to have_http_status 200
+        expect(response).to have_http_status 302
+        expect(response).to redirect_to home_path
       end
     end
 
@@ -32,20 +33,20 @@ RSpec.describe "Lists", type: :request do
         some_user = FactoryBot.create(:user)
         expect {
           post lists_path(list: {
-            title: "Title",
-            description: "Description",
-            user: some_user
-          })
+                            title: "Title",
+                            description: "Description",
+                            user: some_user,
+                          })
         }.to change(List, :count).by 0
         expect(response).to have_http_status 302
       end
     end
 
     describe "GET /lists/new" do
-      it "redirects to lists" do
+      it "redirects to home" do
         get new_list_path
         expect(response).to have_http_status 302
-        expect(response).to redirect_to lists_path
+        expect(response).to redirect_to home_path
       end
     end
 
@@ -55,7 +56,7 @@ RSpec.describe "Lists", type: :request do
         list = FactoryBot.create(:list, user: some_user)
         get list_path(list)
         expect(response).to have_http_status 302
-        expect(response).to redirect_to lists_path
+        expect(response).to redirect_to home_path
       end
     end
 
@@ -67,11 +68,11 @@ RSpec.describe "Lists", type: :request do
         original_description = list.description
 
         patch list_path(list, list: {
-          title: "Updated Title",
-          description: "Updated Description"
-        })
+                                title: "Updated Title",
+                                description: "Updated Description",
+                              })
         expect(response).to have_http_status 302
-        expect(response).to redirect_to lists_path
+        expect(response).to redirect_to home_path
         expect(list.reload.title).to eq original_title
         expect(list.reload.description).to eq original_description
       end
@@ -86,7 +87,7 @@ RSpec.describe "Lists", type: :request do
           delete list_path(list)
         }.to change(List, :count).by 0
         expect(response).to have_http_status 302
-        expect(response).to redirect_to lists_path
+        expect(response).to redirect_to home_path
       end
     end
   end
@@ -95,13 +96,12 @@ RSpec.describe "Lists", type: :request do
     before :each do
       OmniAuth.config.mock_auth[:twitter] = nil
       @user = FactoryBot.create(:user)
-      @list_owner       = FactoryBot.create(:user)
+      @list_owner = FactoryBot.create(:user)
       @list_owners_list = FactoryBot.create(:list, user: @list_owner)
       user_grants_authorization_on_twitter(twitter_callback_hash.merge(uid: @user.uid))
       get "/auth/twitter"
-      allow_any_instance_of(ApplicationController)
-        .to receive(:current_user)
-        .and_return(@user)
+      allow_any_instance_of(ApplicationController).to receive(:current_user)
+                                                        .and_return(@user)
     end
 
     describe "GET /lists" do
@@ -116,7 +116,7 @@ RSpec.describe "Lists", type: :request do
       it "redirects when attempting to view another user's list" do
         get list_path(@list_owners_list)
         expect(response).to have_http_status 302
-        expect(response).to redirect_to lists_path
+        expect(response).to redirect_to home_path
       end
     end
 
@@ -126,11 +126,11 @@ RSpec.describe "Lists", type: :request do
         original_description = @list_owners_list.description
 
         patch list_path(@list_owners_list, list: {
-          title: "Updated Title",
-          description: "Updated Description"
-        })
+                                             title: "Updated Title",
+                                             description: "Updated Description",
+                                           })
         expect(response).to have_http_status 302
-        expect(response).to redirect_to lists_path
+        expect(response).to redirect_to home_path
         expect(@list_owners_list.reload.title).to eq original_title
         expect(@list_owners_list.reload.description).to eq original_description
       end
@@ -141,7 +141,7 @@ RSpec.describe "Lists", type: :request do
         expect {
           delete list_path(@list_owners_list)
         }.to change(List, :count).by 0
-        expect(response).to redirect_to lists_path
+        expect(response).to redirect_to home_path
       end
     end
   end
@@ -152,9 +152,8 @@ RSpec.describe "Lists", type: :request do
       @user = FactoryBot.create(:user)
       user_grants_authorization_on_twitter(twitter_callback_hash.merge(uid: @user.uid))
       get "/auth/twitter"
-      allow_any_instance_of(ApplicationController)
-        .to receive(:current_user)
-        .and_return(@user)
+      allow_any_instance_of(ApplicationController).to receive(:current_user)
+                                                        .and_return(@user)
     end
 
     describe "GET /lists" do
@@ -168,10 +167,10 @@ RSpec.describe "Lists", type: :request do
       it "creates a new list" do
         expect {
           post lists_path(list: {
-            title: "Title",
-            description: "Description",
-            user: @user
-          })
+                            title: "Title",
+                            description: "Description",
+                            user: @user,
+                          })
         }.to change(List, :count).by 1
         expect(response).to have_http_status 302
       end
@@ -196,9 +195,9 @@ RSpec.describe "Lists", type: :request do
       it "updates the list" do
         list = FactoryBot.create(:list, user: @user)
         patch list_path(list, list: {
-          title: "Updated Title",
-          description: "Updated Description"
-        })
+                                title: "Updated Title",
+                                description: "Updated Description",
+                              })
         expect(response).to redirect_to list_path(list)
         expect(list.reload.title).to eq "Updated Title"
         expect(list.reload.description).to eq "Updated Description"

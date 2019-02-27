@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "sessions#create"
+
   delete "/sign_out", to: "sessions#destroy"
 
-  root to: "lists#index"
+  root to: "static_pages#home"
+
+  get "/home", to: "static_pages#home"
 
   resources :lists, except: [:edit] do
     resources :todos, only: [:create, :edit, :update, :destroy] do

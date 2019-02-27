@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  before_action :require_authentication, only: [:new, :create]
+  before_action :require_authentication, only: [:index, :new, :create]
   before_action :set_list, only: [:show, :update, :destroy]
   before_action :authorize_or_redirect, only: [:show, :update, :destroy]
   before_action :set_ordered_items, only: [:show]
@@ -42,7 +42,7 @@ class ListsController < ApplicationController
   private
 
   def require_authentication
-    redirect_to lists_path unless current_user
+    redirect_to home_path unless current_user
   end
 
   def set_list
@@ -50,7 +50,7 @@ class ListsController < ApplicationController
   end
 
   def authorize_or_redirect
-    redirect_to lists_path unless @list.user == current_user
+    redirect_to home_path unless @list.user == current_user
   end
 
   def set_ordered_items
